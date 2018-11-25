@@ -21,3 +21,38 @@
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+
+# IntelliJ Sub-folder 
+*.iml
+**/**/.idea/workspace.xml
+**/**/.idea/tasks.xml
+**/**/.idea/gradle.xml
+**/**/.idea/assetWizardSettings.xml
+**/**/.idea/dictionaries
+**/**/.idea/libraries
+**/**Z.idea/caches
+
+# User-specific configurations
+**/**/.idea/*
+**/**/.idea/libraries/
+**/**/.idea/workspace.xml
+**/**/.idea/tasks.xml
+**/**/.idea/.name
+**/**/.idea/compiler.xml
+**/**/.idea/copyright/profiles_settings.xml
+**/**/.idea/encodings.xmla
+**/**/.idea/misc.xml
+**/**/.idea/modules.xml
+**/**/.idea/scopes/scope_settings.xml
+**/**/.idea/vcs.xml
+**/**/*.iml
+**/**/.idea/caches/build_file_checksums.ser
+
+# OS-specific files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db

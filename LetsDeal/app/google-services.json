@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "115099223239",
+    "firebase_url": "https://lafrituracodez.firebaseio.com",
+    "project_id": "lafrituracodez",
+    "storage_bucket": "lafrituracodez.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:115099223239:android:3296016e06dff250",
+        "android_client_info": {
+          "package_name": "com.lafrituracodez.letsdeal"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "115099223239-b5tja80nb4qmou88io1outjd3e12efh1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAg8cqpdx8xVchYiskz6Gr6v-eOm_yByMw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

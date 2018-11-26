@@ -1,0 +1,14 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.DayNight.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimaryNightMode</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryNightMode</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        
+        <item name="android:textColor">@color/LightGray</item>
+        <item name="android:textColorSecondary">@color/LightGray</item>
+    </style>
+
+</resources>

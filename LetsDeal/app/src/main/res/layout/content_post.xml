@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".PostActivity"
+    tools:showIn="@layout/activity_post">
+
+    <EditText
+        android:id="@+id/editText_titleInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="Book name"
+        android:padding="@dimen/field_padding"/>
+
+    <EditText
+        android:id="@+id/editText_descInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/editText_titleInput"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="Book description"
+        android:padding="@dimen/field_padding"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/editText_descInput"
+        android:text="Send"
+        android:onClick="sendData"
+        android:padding="@dimen/field_padding"
+        />
+
+</RelativeLayout>

@@ -8,12 +8,12 @@ import java.util.Map;
 
 @IgnoreExtraProperties
 public class Post {
+
 	public String uid;
 	public String author;
 	public String title;
 	public String body;
 	public int starCount = 0;
-
 	public Map<String, Boolean> stars = new HashMap<>();
 
 	public Post() {
@@ -25,6 +25,10 @@ public class Post {
 		this.author = author;
 		this.title = title;
 		this.body = body;
+	}
+
+	public Post(String title, String description, String user_id, int price) {
+
 	}
 
 	@Exclude

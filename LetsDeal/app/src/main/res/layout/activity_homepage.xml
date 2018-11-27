@@ -109,7 +109,7 @@
             android:layout_gravity="bottom"
             app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-            app:backgroundTint="@color/random" />
+            app:backgroundTint="@color/colorPrimaryNightMode" />
 
     </android.support.design.widget.CoordinatorLayout>
 

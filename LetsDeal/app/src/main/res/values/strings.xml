@@ -78,6 +78,6 @@
         <item>Brady, Lisa M.</item>
     </string-array>
   
-    <string name="title_activity_test">Create a posting</string>
+    <string name="title_activity_post">New Post</string>
   
 </resources>

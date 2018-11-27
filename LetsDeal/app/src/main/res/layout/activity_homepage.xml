@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <RelativeLayout
+        android:id="@+id/cardViewRelative"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:padding="0dp">
+
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="29dp">
+
+        </android.support.v7.widget.RecyclerView>
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/recycler_view"
+            android:layout_alignStart="@id/recycler_view"
+            android:layout_marginBottom="-29dp"
+            android:text="Recent postings" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/recycler_view"
+            android:layout_alignEnd="@id/recycler_view"
+            android:layout_marginBottom="-29dp"
+            android:layout_marginEnd="11dp"
+            android:text="View all" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/cardViewRelative"
+        android:layout_alignParentStart="true"
+        android:text="Your postings" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/cardViewRelative"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="13dp"
+        android:text="View all" />
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/cardYourPost"
+        android:layout_width="match_parent"
+        android:layout_height="146dp"
+        android:layout_below="@id/textView3"
+        android:layout_marginTop="10dp"
+        android:backgroundTint="@android:color/holo_blue_bright"></android.support.v7.widget.CardView>
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/cardYourPost"
+        android:layout_alignParentStart="true"
+        android:text="Your watched posts" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/cardYourPost"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="13dp"
+        android:text="View all" />
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="146dp"
+        android:layout_below="@id/textView5"
+        android:layout_marginTop="10dp"
+        android:backgroundTint="@android:color/holo_green_light">
+    </android.support.v7.widget.CardView>
+
+    <!-- trying to make bottom appbar -->
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.design.bottomappbar.BottomAppBar
+            android:id="@+id/bottom_appbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            app:backgroundTint="@color/colorPrimaryNightMode" />
+
+    </android.support.design.widget.CoordinatorLayout>
+
+</RelativeLayout>

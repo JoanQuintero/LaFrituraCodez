@@ -17,10 +17,12 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
             android:paddingEnd="@dimen/field_padding"
             android:paddingStart="@dimen/field_padding"
             android:text="Book title"
-            android:textColor="@color/colorAccent"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Title"
+            android:textColor="#6C6C6C"
             android:textStyle="bold" />
 
         <android.support.design.widget.TextInputLayout
@@ -30,7 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/field_padding"
             android:layout_marginStart="@dimen/field_padding"
-            android:hint="Title"
+            android:hint="Author"
             android:textColorHint="@color/colorAccent"
             app:boxStrokeColor="@color/colorAccent">
 
@@ -113,16 +115,16 @@
 
         </android.support.design.widget.TextInputLayout>
 
-
     </LinearLayout>
 
-    <Button
+    <android.support.design.button.MaterialButton
         android:id="@+id/button_post"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-
         android:onClick="sendData"
         android:padding="@dimen/field_padding"
-        android:text="Send" />
+        android:theme="@style/Widget.MaterialComponents.Button"
+        android:text="Send"
+        android:textAppearance="@style/TextAppearance.AppCompat.Button" />
 </RelativeLayout>

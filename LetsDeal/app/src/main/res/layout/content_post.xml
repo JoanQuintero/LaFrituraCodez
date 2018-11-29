@@ -17,11 +17,11 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="10dp"
             android:paddingEnd="@dimen/field_padding"
             android:paddingStart="@dimen/field_padding"
-            android:text="Book title"
-            android:textAppearance="@style/Base.TextAppearance.AppCompat.Title"
+            android:text="@string/post_hint"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
             android:textColor="#6C6C6C"
             android:textStyle="bold" />
 
@@ -32,7 +32,8 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/field_padding"
             android:layout_marginStart="@dimen/field_padding"
-            android:hint="Author"
+            android:layout_marginTop="10dp"
+            android:hint="@string/post_author"
             android:textColorHint="@color/colorAccent"
             app:boxStrokeColor="@color/colorAccent">
 
@@ -54,7 +55,8 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/field_padding"
             android:layout_marginStart="@dimen/field_padding"
-            android:hint="Title"
+            android:layout_marginTop="10dp"
+            android:hint="@string/post_title"
             android:textColorHint="@color/colorAccent"
             app:boxStrokeColor="@color/colorAccent">
 
@@ -76,8 +78,9 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/field_padding"
             android:layout_marginStart="@dimen/field_padding"
+            android:layout_marginTop="10dp"
             android:ems="10"
-            android:hint="Description"
+            android:hint="@string/post_description"
             android:inputType="textPersonName"
             android:textColorHint="@color/colorAccent"
             app:boxStrokeColor="@color/colorAccent">
@@ -86,9 +89,10 @@
                 android:id="@+id/editText_descInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:minHeight="100dp"
                 android:ems="10"
-                android:inputType="textAutoCorrect"
-                android:lines="4"
+                android:inputType="textMultiLine|textAutoCorrect"
+                android:scrollHorizontally="false"
                 android:padding="@dimen/field_padding" />
 
         </android.support.design.widget.TextInputLayout>
@@ -100,8 +104,9 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/field_padding"
             android:layout_marginStart="@dimen/field_padding"
+            android:layout_marginTop="10dp"
             android:ems="10"
-            android:hint="Price"
+            android:hint="@string/post_price"
             android:inputType="numberDecimal"
             android:textColorHint="@color/colorAccent"
             app:boxStrokeColor="@color/colorAccent">
@@ -125,6 +130,6 @@
         android:onClick="sendData"
         android:padding="@dimen/field_padding"
         android:theme="@style/Widget.MaterialComponents.Button"
-        android:text="Send"
+        android:text="@string/post_submit"
         android:textAppearance="@style/TextAppearance.AppCompat.Button" />
 </RelativeLayout>

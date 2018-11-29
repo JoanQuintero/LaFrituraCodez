@@ -1,39 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".PostActivity"
     tools:showIn="@layout/activity_post">
 
-    <EditText
-        android:id="@+id/editText_titleInput"
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:hint="Book name"
-        android:padding="@dimen/field_padding"/>
+        android:text="Book title"
+        android:textColor="@color/colorAccent"
+        android:paddingEnd="@dimen/field_padding"
+        android:paddingStart="@dimen/field_padding"
+        android:textStyle="bold" />
 
-    <EditText
-        android:id="@+id/editText_descInput"
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/editText_postAuthorLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/editText_titleInput"
+        android:hint="Title"
+        android:paddingEnd="@dimen/field_padding"
+        android:paddingStart="@dimen/field_padding">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/editText_authorInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:padding="@dimen/field_padding" />
+
+    </android.support.design.widget.TextInputLayout>
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/editText_postTitleLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Title"
+        android:paddingEnd="@dimen/field_padding"
+        android:paddingStart="@dimen/field_padding">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/editText_titleInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:padding="@dimen/field_padding" />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/editText_descInputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:ems="10"
+        android:hint="Description"
         android:inputType="textPersonName"
-        android:hint="Book description"
-        android:padding="@dimen/field_padding"/>
+        android:paddingEnd="@dimen/field_padding"
+        android:paddingStart="@dimen/field_padding">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/editText_descInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:padding="@dimen/field_padding" />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/editText_priceInputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Price"
+        android:inputType="textPersonName"
+        android:paddingEnd="@dimen/field_padding"
+        android:paddingStart="@dimen/field_padding">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/editText_priceInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="numberDecimal"
+            android:padding="@dimen/field_padding" />
+
+    </android.support.design.widget.TextInputLayout>
+
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/editText_descInput"
-        android:text="Send"
         android:onClick="sendData"
         android:padding="@dimen/field_padding"
-        />
-
-</RelativeLayout>
+        android:text="Send" />
+</LinearLayout>

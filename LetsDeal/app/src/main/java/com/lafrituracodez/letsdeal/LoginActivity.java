@@ -62,7 +62,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
 			// a listener.
 			Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
 			handleSignInResult(task);
-
+			startApp();
 		}
 	}
 

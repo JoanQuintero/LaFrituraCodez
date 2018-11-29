@@ -5,8 +5,11 @@ import android.os.Bundle;
 import android.support.design.bottomappbar.BottomAppBar;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -20,9 +23,10 @@ public class MainActivity extends AppCompatActivity {
 	private FloatingActionButton addItems; // Will need to go back and use this FAB to add items
 	// private TextView aRandomfact;
 	// private ImageView expandRandom;
+	private TextView viewRecents;
 
 	//protected static final String I_AM_HOME= "com.example.I_AM_HOME";
-	private int gridColCount = 1;
+	private int recents_gridColCount = 2;
 
 	public static ArrayList<Library> getVariable() {
 		return libraryListData;
@@ -43,17 +47,27 @@ public class MainActivity extends AppCompatActivity {
 				= new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
 
 
-		RecyclerView myList = findViewById(R.id.recycler_view);
+		//RecyclerView myList = findViewById(R.id.recycler_view);
 
-//        myList.setLayoutManager(layoutManager);
+	        recyclerView.setLayoutManager(layoutManager);
 
 		libraryListData = new ArrayList<>();  // LOOK HERE FOR FINAL PROJECT !
 		libraryAdapter = new LibraryAdapter(this, libraryListData);  // LOOK HERE FOR FINAL PROJECT !
-		myList.setAdapter(libraryAdapter);  // LOOK HERE FOR FINAL PROJECT !
+		recyclerView.setAdapter(libraryAdapter);  // LOOK HERE FOR FINAL PROJECT !
 		loadLibraryData();
 
 		bottomAppBar = findViewById(R.id.bottom_appbar); // BottomAppBarCode
 		bottomAppBar.replaceMenu(R.menu.bottom_menu); // BottomAppBarCode
+		
+		viewRecents = findViewById(R.id.recentPost_viewall);
+        	viewRecents.setOnClickListener(new View.OnClickListener() {
+            		@Override
+            		public void onClick(View v) {
+               		recyclerView.getRecycledViewPool().clear();
+                	recyclerView.setLayoutManager(
+                        new GridLayoutManager(getApplicationContext(), recents_gridColCount));
+           		 }
+       		 });
 
 	}
 

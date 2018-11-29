@@ -2,8 +2,6 @@ package com.lafrituracodez.letsdeal;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -16,8 +14,8 @@ import com.google.firebase.database.*;
 import java.util.Random;
 
 public class PostActivity extends AppCompatActivity implements ValueEventListener {
+
 	private DatabaseReference database;
-	private DatabaseReference post_ref;
 
 	private TextInputEditText title_input;
 	private TextInputEditText author_input;
@@ -32,16 +30,7 @@ public class PostActivity extends AppCompatActivity implements ValueEventListene
 		Toolbar toolbar = findViewById(R.id.toolbar);
 		setSupportActionBar(toolbar);
 
-		FloatingActionButton fab = findViewById(R.id.fab);
-		fab.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-						.setAction("Action", null).show();
-			}
-		});
 		database = FirebaseDatabase.getInstance().getReference();
-		post_ref = database.child("users");
 
 		title_input = findViewById(R.id.editText_titleInput);
 		desc_input = findViewById(R.id.editText_descInput);
@@ -71,10 +60,14 @@ public class PostActivity extends AppCompatActivity implements ValueEventListene
 
 		String author = author_input.getText().toString();
 		String title = title_input.getText().toString();
-
 		String desc = desc_input.getText().toString();
-		Double price = Double.parseDouble(price_input.getText().toString());
-
+		Double price;
+		try {
+			price = Double.parseDouble(price_input.getText().toString());
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+			price = 0.0;
+		}
 		Post post = new Post(Integer.toString(post_id), author, title, desc, price);
 		database.child("posts/" + u_id + "/" + post_id)
 				.setValue(post)
@@ -91,7 +84,6 @@ public class PostActivity extends AppCompatActivity implements ValueEventListene
 					}
 				});
 	}
-
 
 	private void sendToast(String message) {
 		Toast.makeText(this, message, Toast.LENGTH_SHORT).show();

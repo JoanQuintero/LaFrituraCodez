@@ -2,8 +2,6 @@ package com.lafrituracodez.letsdeal;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -16,8 +14,8 @@ import com.google.firebase.database.*;
 import java.util.Random;
 
 public class PostActivity extends AppCompatActivity implements ValueEventListener {
+
 	private DatabaseReference database;
-	private DatabaseReference post_ref;
 
 	private TextInputEditText title_input;
 	private TextInputEditText author_input;
@@ -83,7 +81,6 @@ public class PostActivity extends AppCompatActivity implements ValueEventListene
 					}
 				});
 	}
-
 
 	private void sendToast(String message) {
 		Toast.makeText(this, message, Toast.LENGTH_SHORT).show();

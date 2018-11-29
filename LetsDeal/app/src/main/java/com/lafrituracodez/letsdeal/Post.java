@@ -9,27 +9,27 @@ import java.util.Map;
 @IgnoreExtraProperties
 public class Post {
 
-	public String uid;
-	public String author;
-	public String title;
-	public String body;
-	public int starCount = 0;
-	public Map<String, Boolean> stars = new HashMap<>();
+	private String uid;
+	private String author;
+	private String title;
+	private String desc;
+
+	private double price;
+	private int starCount = 0;
+	private Map<String, Boolean> stars = new HashMap<>();
 
 	public Post() {
 
 	}
 
-	public Post(String uid, String author, String title, String body) {
+	Post(String uid, String author, String title, String desc, double price) {
 		this.uid = uid;
 		this.author = author;
 		this.title = title;
-		this.body = body;
+		this.desc = desc;
+		this.price = price;
 	}
 
-	public Post(String title, String description, String user_id, int price) {
-
-	}
 
 	@Exclude
 	public Map<String, Object> toMap() {
@@ -37,10 +37,67 @@ public class Post {
 		result.put("uid", uid);
 		result.put("author", author);
 		result.put("title", title);
-		result.put("body", body);
+		result.put("desc", desc);
 		result.put("starCount", starCount);
 		result.put("stars", stars);
 
 		return result;
 	}
+
+	public String getAuthor() {
+		return author;
+	}
+
+	public void setAuthor(String author) {
+		this.author = author;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public String getDesc() {
+		return desc;
+	}
+
+	public void setDesc(String desc) {
+		this.desc = desc;
+	}
+
+	public double getPrice() {
+		return price;
+	}
+
+	public void setPrice(double price) {
+		this.price = price;
+	}
+
+	public int getStarCount() {
+		return starCount;
+	}
+
+	public void setStarCount(int starCount) {
+		this.starCount = starCount;
+	}
+
+	public Map<String, Boolean> getStars() {
+		return stars;
+	}
+
+	public void setStars(Map<String, Boolean> stars) {
+		this.stars = stars;
+	}
+
+	public String getUid() {
+		return uid;
+	}
+
+	public void setUid(String uid) {
+		this.uid = uid;
+	}
+
 }

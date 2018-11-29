@@ -56,7 +56,7 @@ public class PostActivity extends AppCompatActivity implements ValueEventListene
 
 	public boolean sendData(View view) {
 		final String u_id;
-		final String query;
+		final String key;
 
 		String author = author_input.getText().toString();
 		String title = title_input.getText().toString();
@@ -65,7 +65,7 @@ public class PostActivity extends AppCompatActivity implements ValueEventListene
 
 		try {
 			u_id = account.getId();
-			query = database.child("posts").push().getKey();
+			key = database.child("posts").push().getKey();
 		} catch (NullPointerException e) {
 			e.printStackTrace();
 			sendToast("Something went wrong. Sorry!");
@@ -81,14 +81,14 @@ public class PostActivity extends AppCompatActivity implements ValueEventListene
 		Post post = new Post(u_id, author, title, desc, price);
 
 
-		database.child("posts").push()
-				.setValue(post)
+		database.child("posts")
+				.child(key).setValue(post)
 				.addOnSuccessListener(new OnSuccessListener<Void>() {
 					@Override
 					public void onSuccess(Void aVoid) {
 						Toast.makeText(getBaseContext(), "Post successful", Toast.LENGTH_SHORT).show();
-						UserPost userPost = new UserPost(u_id, query);
-						database.child("user-posts/" + u_id).push().setValue(userPost);
+						UserPost userPost = new UserPost(u_id, key);
+						database.child("user-posts/").push().setValue(userPost);
 					}
 				})
 				.addOnFailureListener(new OnFailureListener() {

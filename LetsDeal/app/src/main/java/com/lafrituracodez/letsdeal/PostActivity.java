@@ -54,17 +54,23 @@ public class PostActivity extends AppCompatActivity implements ValueEventListene
 		Toast.makeText(this, "Failed to read value", Toast.LENGTH_SHORT).show();
 	}
 
-	public void sendData(View view) {
-		Random r = new Random();
-
-		// TODO: Replace by actual values after Login has been integrated.
-		final int post_id = r.nextInt(100);
+	public boolean sendData(View view) {
+		final String u_id;
+		final String query;
 
 		String author = author_input.getText().toString();
 		String title = title_input.getText().toString();
 		String desc = desc_input.getText().toString();
-		final String u_id = account.getId();
 
+
+		try {
+			u_id = account.getId();
+			query = database.child("posts").push().getKey();
+		} catch (NullPointerException e) {
+			e.printStackTrace();
+			sendToast("Something went wrong. Sorry!");
+			return true;
+		}
 		Double price;
 		try {
 			price = Double.parseDouble(price_input.getText().toString());
@@ -72,7 +78,8 @@ public class PostActivity extends AppCompatActivity implements ValueEventListene
 			e.printStackTrace();
 			price = 0.0;
 		}
-		Post post = new Post(Integer.toString(post_id), author, title, desc, price);
+		Post post = new Post(u_id, author, title, desc, price);
+
 
 		database.child("posts").push()
 				.setValue(post)
@@ -80,7 +87,7 @@ public class PostActivity extends AppCompatActivity implements ValueEventListene
 					@Override
 					public void onSuccess(Void aVoid) {
 						Toast.makeText(getBaseContext(), "Post successful", Toast.LENGTH_SHORT).show();
-						UserPost userPost = new UserPost(u_id, Integer.toString(post_id));
+						UserPost userPost = new UserPost(u_id, query);
 						database.child("user-posts/" + u_id).push().setValue(userPost);
 					}
 				})
@@ -90,6 +97,7 @@ public class PostActivity extends AppCompatActivity implements ValueEventListene
 						Toast.makeText(getBaseContext(), "Post Failed. Check values and retry!", Toast.LENGTH_SHORT).show();
 					}
 				});
+		return true;
 	}
 
 

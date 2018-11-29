@@ -1,4 +1,4 @@
-package com.example.joansquintero.myapplication;
+package com.lafrituracodez.letsdeal;
 
 public class Library {
 

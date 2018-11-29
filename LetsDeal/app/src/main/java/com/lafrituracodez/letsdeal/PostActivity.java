@@ -31,7 +31,6 @@ public class PostActivity extends AppCompatActivity implements ValueEventListene
 		setSupportActionBar(toolbar);
 
 		database = FirebaseDatabase.getInstance().getReference();
-		post_ref = database.child("users");
 
 		title_input = findViewById(R.id.editText_titleInput);
 		desc_input = findViewById(R.id.editText_descInput);
@@ -61,10 +60,14 @@ public class PostActivity extends AppCompatActivity implements ValueEventListene
 
 		String author = author_input.getText().toString();
 		String title = title_input.getText().toString();
-
 		String desc = desc_input.getText().toString();
-		Double price = Double.parseDouble(price_input.getText().toString());
-
+		Double price;
+		try {
+			price = Double.parseDouble(price_input.getText().toString());
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+			price = 0.0;
+		}
 		Post post = new Post(Integer.toString(post_id), author, title, desc, price);
 		database.child("posts/" + u_id + "/" + post_id)
 				.setValue(post)

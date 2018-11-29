@@ -10,6 +10,7 @@
         <item name="android:textColorPrimary">@color/Black</item>
         <item name="android:textColorSecondary">@color/DarkGray</item>
     </style>
+
     <style name="AppTheme.NoActionBar" parent="Theme.AppCompat.DayNight.DarkActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorAccent">@color/colorAccent</item>
@@ -20,7 +21,10 @@
         <item name="android:textColorSecondary">@android:color/white</item>
         <item name="android:statusBarColor">@color/colorPrimary</item>
         <item name="android:windowLightStatusBar">true</item>
-
     </style>
 
+    <style name="LoginTextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+        <item name="boxStrokeColor">@color/colorAccent</item>
+        <item name="boxStrokeWidth">2dp</item>
+    </style>
 </resources>

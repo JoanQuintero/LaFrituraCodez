@@ -15,8 +15,8 @@ public class PostActivity extends AppCompatActivity implements ValueEventListene
 	private DatabaseReference database;
 	private DatabaseReference post_ref;
 
-	private EditText text1;
-	private EditText text2;
+	private EditText title_input;
+	private EditText desc_input;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -36,8 +36,8 @@ public class PostActivity extends AppCompatActivity implements ValueEventListene
 		database = FirebaseDatabase.getInstance().getReference();
 		post_ref = database.child("users");
 
-		text1 = (EditText)findViewById(R.id.editText_titleInput);
-		text2 = (EditText)findViewById(R.id.editText_descInput);
+		title_input = (EditText)findViewById(R.id.editText_titleInput);
+		desc_input = (EditText)findViewById(R.id.editText_descInput);
 
 	}
 
@@ -53,11 +53,11 @@ public class PostActivity extends AppCompatActivity implements ValueEventListene
 	}
 
 	public void sendData(View view) {
-		Toast.makeText(this, text1.getText().toString() + " " + text2.getText().toString(), Toast.LENGTH_SHORT).show();
+		Toast.makeText(this, title_input.getText().toString() + " " + desc_input.getText().toString(), Toast.LENGTH_SHORT).show();
 
-		Post post = new Post(text1.getText().toString(), text2.getText().toString(), "Book test", "I am a test");
+		Post post = new Post(title_input.getText().toString(), desc_input.getText().toString(), "Book test", "I am a test");
 
-		database.child("users").child(text1.getText().toString()).setValue(post);
+		database.child("users").child(title_input.getText().toString()).setValue(post);
 
 
 

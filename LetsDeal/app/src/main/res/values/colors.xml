@@ -177,4 +177,9 @@
 
     <color name="Yellow">#FFFF00</color>
     <color name="YellowGreen">#9ACD32</color>
+
+    <color name="mtrl_textinput_default_box_stroke_color"
+        xmlns:tools="http://schemas.android.com/tools"
+        tools:override="true">#00796B</color>
+
 </resources>

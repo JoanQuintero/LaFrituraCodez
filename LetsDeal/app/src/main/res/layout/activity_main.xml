@@ -35,7 +35,7 @@
             android:text="@string/recent_posts" />
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/recentPost_viewall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_above="@+id/recycler_view"

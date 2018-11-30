@@ -5,31 +5,29 @@
     <item
         android:id="@+id/home"
         android:icon="@drawable/ic_home_black"
-        android:title="home"
         android:orderInCategory="10"
-        app:showAsAction="always"/>
+        android:title="home"
+        app:showAsAction="always" />
 
     <item
         android:id="@+id/app_bar_search"
         android:icon="@drawable/ic_search_black_24dp"
-        android:title="Search"
         android:orderInCategory="30"
+        android:title="Search"
         app:actionViewClass="android.widget.SearchView"
-        app:showAsAction="always"/>
+        app:showAsAction="always" />
 
     <item
         android:id="@+id/myaccount"
         android:icon="@drawable/ic_account_circle_black"
-        android:title="Item"
         android:orderInCategory="50"
-        app:showAsAction="always"/>
+        android:title="Item"
+        app:showAsAction="always" />
 
     <item
         android:id="@+id/action_settings"
-        android:title="Settings"
-        android:orderInCategory="100"/>
-
-
+        android:orderInCategory="100"
+        android:title="Settings" />
 
 </menu>
 

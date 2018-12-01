@@ -13,8 +13,6 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.*;
 
-import java.util.Random;
-
 public class PostActivity extends AppCompatActivity implements ValueEventListener {
 
 	private DatabaseReference database;

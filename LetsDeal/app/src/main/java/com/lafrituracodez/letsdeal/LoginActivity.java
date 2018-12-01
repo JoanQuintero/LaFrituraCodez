@@ -15,8 +15,8 @@ import com.google.android.gms.tasks.Task;
 
 
 public class LoginActivity extends Activity implements View.OnClickListener {
-	private final static int RC_SUCCESS_SIGN_IN = 23;
 
+	protected final static int RC_SUCCESS_SIGN_IN = 23;
 	private GoogleSignInClient googleSignInClient;
 
 	@Override
@@ -45,10 +45,8 @@ public class LoginActivity extends Activity implements View.OnClickListener {
 
 	@Override
 	public void onClick(View v) {
-		switch (v.getId()) {
-			case R.id.sign_in_button:
-				signIn();
-				break;
+		if (v.getId() == R.id.sign_in_button) {
+			signIn();
 		}
 	}
 
@@ -82,8 +80,9 @@ public class LoginActivity extends Activity implements View.OnClickListener {
 	}
 
 	private void startApp() {
-		Intent intent = new Intent(this, MainActivity.class);
-		startActivity(intent);
+		Intent intent = new Intent();
+		setResult(RC_SUCCESS_SIGN_IN, intent);
+		finish();
 	}
 
 	private void updateUI(GoogleSignInAccount account) {

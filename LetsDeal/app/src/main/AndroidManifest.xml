@@ -25,6 +25,16 @@
             android:name=".LoginActivity"
             android:label="@string/title_activity_post"
             android:theme="@style/AppTheme.NoActionBar" />
+        
+        <activity android:name=".DetailsActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.DETAILS" />
+
+                <category android:name="android.intent.category.LAUNCHER"
+                    android:theme="@style/AppTheme.NoActionBar"
+                    />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

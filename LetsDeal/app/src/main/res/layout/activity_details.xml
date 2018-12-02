@@ -23,19 +23,26 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="86dp"
-                android:layout_marginTop="27dp"
-                android:text="TextView"
-                android:textColor="@color/Blue" />
+                android:clickable="true"
+                android:contextClickable="true"
+                android:shadowColor="@android:color/black"
+                android:shadowDx="0"
+                android:shadowDy="0"
+                android:shadowRadius="50"
+                android:text="←"
+                android:textAlignment="center"
+                android:textColor="@color/colorTextDarkGray"
+                android:textSize="40sp" />
 
             <TextView
                 android:id="@+id/booktitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignTop="@+id/return_to"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="25dp"
+                android:layout_toEndOf="@+id/return_to"
                 android:text="TextView"
+                android:textAlignment="center"
                 android:textColor="@color/Red" />
         </RelativeLayout>
     </FrameLayout>
@@ -78,84 +85,93 @@
         android:layout_below="@+id/bookdesc_loc">
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/Total"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:layout_marginStart="51dp"
-            android:layout_marginTop="68dp"
-            android:text="TextView" />
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:text="TOTAL" />
 
         <TextView
-            android:id="@+id/textView7"
+            android:id="@+id/Subtotal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/Total"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:text="Subtotal" />
+
+        <TextView
+            android:id="@+id/Shipping"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/Subtotal"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:text="Shipping/Handling" />
+
+        <TextView
+            android:id="@+id/Taxesandfees"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/Shipping"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:text="Taxes and Fees" />
+
+        <TextView
+            android:id="@+id/Totalvalue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:layout_alignStart="@+id/textView2"
-            android:layout_marginTop="100dp"
-            android:text="TextView" />
-
-        <TextView
-            android:id="@+id/textView8"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/textView2"
-            android:layout_centerVertical="true"
-            android:text="TextView" />
-
-        <TextView
-            android:id="@+id/textView9"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignStart="@+id/textView2"
-            android:layout_marginBottom="87dp"
-            android:text="TextView" />
-
-        <TextView
-            android:id="@+id/textView10"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:layout_alignTop="@+id/textView2"
-            android:layout_marginEnd="61dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="10dp"
             android:text="TextView" />
 
         <TextView
-            android:id="@+id/textView11"
+            android:id="@+id/Subtotalvalue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@+id/Totalvalue"
             android:layout_alignParentEnd="true"
-            android:layout_below="@+id/textView7"
-            android:layout_marginEnd="68dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="10dp"
             android:text="TextView" />
 
         <TextView
-            android:id="@+id/textView12"
+            android:id="@+id/Shippingvalue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/textView10"
-            android:layout_below="@+id/textView8"
+            android:layout_below="@+id/Subtotalvalue"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="10dp"
             android:text="TextView" />
 
         <TextView
-            android:id="@+id/textView13"
+            android:id="@+id/Taxesandfeesvalue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/textView10"
-            android:layout_below="@+id/textView9"
-            android:layout_marginTop="-87dp"
+            android:layout_below="@+id/Shippingvalue"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="10dp"
             android:text="TextView" />
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/Buy"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="19dp"
-            android:text="Button" />
+            android:text="ADD TO CART" />
     </RelativeLayout>
 
 </RelativeLayout>

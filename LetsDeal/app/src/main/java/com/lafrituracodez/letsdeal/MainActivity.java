@@ -24,15 +24,10 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
 	private static ArrayList<Library> libraryListData;
 	private GoogleSignInAccount account;
-	//private ArrayList<Library> item; // new
-	private int selected = -1;
-	private RecyclerView recyclerView;
+	private RecyclerView recyclerView, recyclerView2, recyclerView3;
 
 	private LibraryAdapter libraryAdapter;
 	private FloatingActionButton addItems;
-
-	// private TextView aRandomfact;
-	// private ImageView expandRandom;
 	private TextView viewRecents;
 
 	//protected static final String I_AM_HOME= "com.example.I_AM_HOME";
@@ -60,20 +55,23 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 		setContentView(R.layout.activity_main);
 
 		recyclerView = findViewById(R.id.recycler_view);
+		recyclerView2 = findViewById(R.id.recycler_view2);
+		recyclerView3 = findViewById(R.id.recycler_view3);
 
-		//recyclerView.setLayoutManager(new GridLayoutManager(this, gridColCount)); // LOOK HERE FOR FINAL PROJECT !
-
-		LinearLayoutManager layoutManager
+		final LinearLayoutManager layoutManager
 				= new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-
-
-		//RecyclerView myList = findViewById(R.id.recycler_view);
-
+		final LinearLayoutManager layoutManager2
+				= new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+		final LinearLayoutManager layoutManager3
+				= new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+		
 		recyclerView.setLayoutManager(layoutManager);
+		recyclerView2.setLayoutManager(layoutManager2);
+		recyclerView3.setLayoutManager(layoutManager3);
 
-		libraryListData = new ArrayList<>();  // LOOK HERE FOR FINAL PROJECT !
-		libraryAdapter = new LibraryAdapter(this, libraryListData);  // LOOK HERE FOR FINAL PROJECT !
-		recyclerView.setAdapter(libraryAdapter);  // LOOK HERE FOR FINAL PROJECT !
+		libraryListData = new ArrayList<>(); 
+		libraryAdapter = new LibraryAdapter(this, libraryListData);  
+		recyclerView.setAdapter(libraryAdapter);  
 		loadLibraryData();
 
 		navigationView = findViewById(R.id.navigation);
@@ -86,6 +84,13 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 				recyclerView.getRecycledViewPool().clear();
 				recyclerView.setLayoutManager(
 						new GridLayoutManager(getApplicationContext(), recents_gridColCount));
+				viewRecents.setText("Go Back");
+				viewRecents.setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						recreate();
+					}
+				});
 			}
 		});
 	}
@@ -148,5 +153,20 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 		libraryAdapter.notifyDataSetChanged();
 		libraryImages.recycle();
 
+	}
+	
+		@Override
+	public void onBackPressed() {
+		new AlertDialog.Builder(this)
+				.setTitle("Exiting App")
+				.setMessage("Are you sure you want to exit?")
+				.setNegativeButton(android.R.string.no, null)
+				.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+
+					public void onClick(DialogInterface arg0, int arg1) {
+						MainActivity.super.onBackPressed();
+						finish();
+					}
+				}).create().show();
 	}
 }

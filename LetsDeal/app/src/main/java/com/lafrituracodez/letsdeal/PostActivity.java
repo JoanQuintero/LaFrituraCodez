@@ -1,17 +1,25 @@
 package com.lafrituracodez.letsdeal;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.*;
+
+import java.io.FileNotFoundException;
 
 public class PostActivity extends AppCompatActivity implements ValueEventListener {
 
@@ -23,6 +31,7 @@ public class PostActivity extends AppCompatActivity implements ValueEventListene
 	private TextInputEditText desc_input;
 	private TextInputEditText price_input;
 
+	static final int REQUEST_IMAGE_CAPTURE = 1;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -103,4 +112,36 @@ public class PostActivity extends AppCompatActivity implements ValueEventListene
 		Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
 	}
 
+	public void createIntent(View view) {
+		Intent pickIntent = new Intent();
+		pickIntent.setType("image/*");
+		pickIntent.setAction(Intent.ACTION_GET_CONTENT);
+
+		Intent takePhotoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+		String pickTitle = "Select or take a new Picture"; // Or get from strings.xml
+		Intent chooserIntent = Intent.createChooser(pickIntent, pickTitle);
+		chooserIntent.putExtra
+				(
+						Intent.EXTRA_INITIAL_INTENTS,
+						new Intent[] { takePhotoIntent }
+				);
+
+		startActivityForResult(chooserIntent, REQUEST_IMAGE_CAPTURE);
+	}
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+			Uri selectedImage = data.getData();
+			Bitmap bitmap = null;
+			try {
+				bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(selectedImage));
+				ImageView image = findViewById(R.id.imageview_changing);
+				image.setImageBitmap(bitmap);
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+				sendToast("There was an error when retrieveing image.");
+			}
+		}
+	}
 }

@@ -5,11 +5,15 @@ import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,7 +25,7 @@ import com.google.firebase.database.*;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener, ChildEventListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, ChildEventListener {
 
 
 	private final static String TAG = "MainActivity";
@@ -38,8 +42,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
 	private int recents_gridColCount = 2;
 
-	private BottomNavigationView navigationView;
-
 	// fix this before moving on
 
 
@@ -54,7 +56,18 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
+		setContentView(R.layout.activity_drawer);
+		Toolbar toolbar = findViewById(R.id.toolbar);
+		setSupportActionBar(toolbar);
+
+		DrawerLayout drawer = findViewById(R.id.drawer_layout);
+		ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+				this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+		drawer.addDrawerListener(toggle);
+		toggle.syncState();
+
+		NavigationView navigationView = findViewById(R.id.nav_view);
+		navigationView.setNavigationItemSelectedListener(this);
 
 		recyclerView = findViewById(R.id.recycler_view);
 
@@ -73,9 +86,6 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
 		mDatabase = FirebaseDatabase.getInstance().getReference().child("posts");
 		mDatabase.addChildEventListener(this);
-
-		navigationView = findViewById(R.id.navigation);
-		navigationView.setOnNavigationItemSelectedListener(this);
 
 		viewRecents = findViewById(R.id.recentPost_viewall);
 		viewRecents.setOnClickListener(new View.OnClickListener() {
@@ -96,30 +106,35 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
 	@Override
 	public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-		Intent intent;
-		switch (menuItem.getItemId()) {
-			case R.id.action_home:
-				intent = new Intent(this, MainActivity.class);
-				sendToast("Home pressed");
-				startActivity(intent);
-				break;
-			case R.id.action_add:
-				intent = new Intent(this, PostActivity.class);
-				sendToast("Trending pressed");
-				startActivity(intent);
-				break;
-			case R.id.action_search:
-				sendToast("Search pressed");
-				break;
-			case R.id.action_cart:
-				sendToast("Cart pressed");
-				break;
-			case R.id.action_account:
-				sendToast("Account pressed");
-				break;
+		// Handle navigation view item clicks here.
+		int id = menuItem.getItemId();
+
+		if (id == R.id.nav_account) {
+
+		} else if (id == R.id.nav_add) {
+			Intent intent = new Intent(this, PostActivity.class);
+			startActivity(intent);
+
+		} else if (id == R.id.nav_search) {
+
+
 		}
 
+		DrawerLayout drawer = findViewById(R.id.drawer_layout);
+		drawer.closeDrawer(GravityCompat.START);
 		return true;
+
+	}
+
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		int id = item.getItemId();
+		if (id == R.id.action_settings) {
+			return true;
+		}
+
+		return super.onOptionsItemSelected(item);
 	}
 
 	@Override
@@ -167,7 +182,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 					libraryTitles[i],
 					libraryDesc[i],
 					Double.parseDouble(libraryPrices[i]),
-					libraryImages.getResourceId(i,0)
+					libraryImages.getResourceId(i, 0)
 			);
 
 			postData.add(currentPost);

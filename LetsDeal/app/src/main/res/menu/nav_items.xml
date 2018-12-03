@@ -4,10 +4,14 @@
         android:id="@+id/action_home"
         android:icon="@drawable/ic_home"
         android:title="@string/nav_home" />
+    <!--<item-->
+        <!--android:id="@+id/action_trending"-->
+        <!--android:icon="@drawable/ic_trending"-->
+        <!--android:title="@string/nav_trending" />-->
     <item
-        android:id="@+id/action_trending"
-        android:icon="@drawable/ic_trending"
-        android:title="@string/nav_trending" />
+        android:id="@+id/action_add"
+        android:icon="@drawable/ic_upload"
+        android:title="@string/nav_add" />
     <item
         android:id="@+id/action_search"
         android:icon="@drawable/ic_search"

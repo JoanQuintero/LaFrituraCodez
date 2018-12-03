@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-public class MyAccount extends AppCompatActivity {
+public class AccountActivity extends AppCompatActivity {
 
     private TextView PersonalSettings, ProfileEdit, UserEdit, PwEdit, PreferencesEdit, Settings,
             Orders, AllOrders, Utilities, AppStyle, Cache, SysOptions, MemUsage;
@@ -15,7 +15,7 @@ public class MyAccount extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_myaccount);
+        setContentView(R.layout.activity_account);
 
         //PersonalSettings = findViewById(R.id.account_settings);
 

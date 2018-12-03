@@ -4,61 +4,58 @@ package com.lafrituracodez.letsdeal;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
-import java.util.Random;
 
-public class LibraryAdapter extends
-        RecyclerView.Adapter<LibraryAdapter.LibraryHolder> {     // LOOK HERE FOR FINAL PROJECT !
+public class PostAdapter extends
+        RecyclerView.Adapter<PostAdapter.PostHolder> {     // LOOK HERE FOR FINAL PROJECT !
 
     private int bookSelected = -1; // This is so that we can keep track of an item based either on its position or index
     private Context context; // context is well defined here and can be used anywhere, usually for intents.
-    private ArrayList<Library> LibraryData; //this is the arraylist that will have the title, info and image.
+    private ArrayList<Post> postData; //this is the arraylist that will have the title, info and image.
 
-    public LibraryAdapter(Context ctx, ArrayList<Library> library){
+    public PostAdapter(Context ctx, ArrayList<Post> post){
         context = ctx;
-        LibraryData = library;
+        postData = post;
     }
 
     @NonNull
     @Override
-    public LibraryHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new LibraryHolder(LayoutInflater
+    public PostHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        return new PostHolder(LayoutInflater
                 .from(context)
                 .inflate(R.layout.list_books, parent, false));
 
     }
 
     @Override
-    public void onBindViewHolder(@NonNull LibraryHolder holder, int position) {
-        Library currentBook = LibraryData.get(position);
+    public void onBindViewHolder(@NonNull PostHolder holder, int position) {
+        Post currentBook = postData.get(position);
         holder.bindItem(currentBook);
 
     }
 
     @Override
     public int getItemCount() {
-        return LibraryData.size();
+        return postData.size();
     }
 
     /* BEGINNING OF NESTED CLASS */
-    public class LibraryHolder extends RecyclerView.ViewHolder
+    public class PostHolder extends RecyclerView.ViewHolder
             implements View.OnClickListener, View.OnLongClickListener {
         private TextView textTitle, textInfo, textPrice;
         private ImageView imageViewBook;
 
-        public LibraryHolder(View itemView) {
+        public PostHolder(View itemView) {
             super(itemView);
             textInfo = (TextView) itemView.findViewById(R.id.tv_info);
             textTitle = (TextView) itemView.findViewById(R.id.tv_title);
@@ -70,15 +67,15 @@ public class LibraryAdapter extends
         }
 
         //bindItem
-        public void bindItem(Library currentBook){ //This method puts together the following items
+        public void bindItem(Post currentBook){ //This method puts together the following items
             // so that they can be shown together... so basically, each cardview has its own
             // or you can also understand it by saying that each of this item correspond to each other
             // so they belong in a cardview together.
             textTitle.setText(currentBook.getTitle());
-            textInfo.setText(currentBook.getInfo());
-            textPrice.setText(currentBook.getPrice());
+            textInfo.setText(currentBook.getDesc());
+            textPrice.setText(Double.toString(currentBook.getPrice()));
 
-            Glide.with(context).load(currentBook.getImageId()).into(imageViewBook);
+            Glide.with(context).load(currentBook.getResource()).into(imageViewBook);
 
         }
 
@@ -88,7 +85,7 @@ public class LibraryAdapter extends
             // In the details activity you are suppose to pass in the
             // Title, Description, Image, Calories and a link to an online recipe for the foodie.
 
-            Library currentBook = LibraryData.get( getAdapterPosition());
+            Post currentBook = postData.get( getAdapterPosition());
             // the reason why we are creating currFoodie is because we need some info from it.
             // the currFoodie that will provide this information is the item being clicked because
             // getAdapterPosition is given a value based on the click.

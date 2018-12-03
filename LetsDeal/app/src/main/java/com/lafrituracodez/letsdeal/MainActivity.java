@@ -4,47 +4,44 @@ import android.content.Intent;
 import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.firebase.database.*;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener, ChildEventListener {
 
 
-	private static ArrayList<Library> libraryListData;
+	private final static String TAG = "MainActivity";
+
+	private static ArrayList<Post> postData;
+
 	private GoogleSignInAccount account;
-	//private ArrayList<Library> item; // new
-	private int selected = -1;
+	private DatabaseReference mDatabase;
 	private RecyclerView recyclerView;
 
-	private LibraryAdapter libraryAdapter;
-	private FloatingActionButton addItems;
+	private PostAdapter postAdapter;
 
-	// private TextView aRandomfact;
-	// private ImageView expandRandom;
 	private TextView viewRecents;
 
-	//protected static final String I_AM_HOME= "com.example.I_AM_HOME";
 	private int recents_gridColCount = 2;
 
 	private BottomNavigationView navigationView;
 
 	// fix this before moving on
 
-	public static ArrayList<Library> getVariable() {
-		return libraryListData;
-	}
 
 	@Override
 	protected void onStart() {
@@ -67,14 +64,15 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 				= new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
 
 
-		//RecyclerView myList = findViewById(R.id.recycler_view);
-
 		recyclerView.setLayoutManager(layoutManager);
 
-		libraryListData = new ArrayList<>();  // LOOK HERE FOR FINAL PROJECT !
-		libraryAdapter = new LibraryAdapter(this, libraryListData);  // LOOK HERE FOR FINAL PROJECT !
-		recyclerView.setAdapter(libraryAdapter);  // LOOK HERE FOR FINAL PROJECT !
+		postData = new ArrayList<>();  // LOOK HERE FOR FINAL PROJECT !
+		postAdapter = new PostAdapter(this, postData);  // LOOK HERE FOR FINAL PROJECT !
+		recyclerView.setAdapter(postAdapter);  // LOOK HERE FOR FINAL PROJECT !
 		loadLibraryData();
+
+		mDatabase = FirebaseDatabase.getInstance().getReference().child("posts");
+		mDatabase.addChildEventListener(this);
 
 		navigationView = findViewById(R.id.navigation);
 		navigationView.setOnNavigationItemSelectedListener(this);
@@ -98,12 +96,17 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
 	@Override
 	public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+		Intent intent;
 		switch (menuItem.getItemId()) {
 			case R.id.action_home:
+				intent = new Intent(this, MainActivity.class);
 				sendToast("Home pressed");
+				startActivity(intent);
 				break;
-			case R.id.action_trending:
+			case R.id.action_add:
+				intent = new Intent(this, PostActivity.class);
 				sendToast("Trending pressed");
+				startActivity(intent);
 				break;
 			case R.id.action_search:
 				sendToast("Search pressed");
@@ -115,7 +118,64 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 				sendToast("Account pressed");
 				break;
 		}
+
 		return true;
+	}
+
+	@Override
+	public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+		Log.d(TAG, "onChildAdded:" + dataSnapshot.getKey());
+		Post post = dataSnapshot.getValue(Post.class);
+		postData.add(post);
+		postAdapter.notifyItemChanged(postData.size());
+
+	}
+
+	@Override
+	public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+	}
+
+	@Override
+	public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+	}
+
+	@Override
+	public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+	}
+
+	@Override
+	public void onCancelled(@NonNull DatabaseError databaseError) {
+
+	}
+
+	private void loadLibraryData() {    // LOOK HERE FOR FINAL PROJECT !
+		postData.clear();
+
+		TypedArray libraryImages = getResources().obtainTypedArray(R.array.book_images);
+		String[] libraryTitles = getResources().getStringArray(R.array.book_names);
+		String[] libraryDesc = getResources().getStringArray(R.array.book_description);
+		String[] libraryPrices = getResources().getStringArray(R.array.book_prices);
+		// Post constructor: (String uid, String author, String title, String desc, double price, int resource) {
+
+		for (int i = 0; i < libraryImages.length(); i++) {
+			Post currentPost = new Post(
+					"12",
+					"John Doe",
+					libraryTitles[i],
+					libraryDesc[i],
+					Double.parseDouble(libraryPrices[i]),
+					libraryImages.getResourceId(i,0)
+			);
+
+			postData.add(currentPost);
+
+		}
+		postAdapter.notifyDataSetChanged();
+		libraryImages.recycle();
+
 	}
 
 	private void sendToast(String message) {
@@ -127,26 +187,9 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 		startActivityForResult(intent, LoginActivity.RC_SUCCESS_SIGN_IN);
 	}
 
-	private void loadLibraryData() {    // LOOK HERE FOR FINAL PROJECT !
-		libraryListData.clear();
-
-		TypedArray libraryImages = getResources().obtainTypedArray(R.array.book_images);
-		String[] libraryTitles = getResources().getStringArray(R.array.book_names);
-		String[] libraryInfos = getResources().getStringArray(R.array.book_description);
-		String[] libraryPrices = getResources().getStringArray(R.array.book_prices);
-
-		for (int i = 0; i < libraryImages.length(); i++) {
-			Library currentBook = new Library(
-					libraryTitles[i],
-					libraryInfos[i],
-					libraryPrices[i],
-					libraryImages.getResourceId(i, 0));
-
-			libraryListData.add(currentBook);
-
-		}
-		libraryAdapter.notifyDataSetChanged();
-		libraryImages.recycle();
-
+	public void sendToPost(View v) {
+		Intent intent = new Intent(this, PostActivity.class);
+		startActivity(intent);
 	}
+
 }

@@ -46,14 +46,14 @@
     </string-array>
 
     <string-array name="book_prices">
-        <item>$100</item>
-        <item>$200</item>
-        <item>$300</item>
-        <item>$400</item>
-        <item>$500</item>
-        <item>$600</item>
-        <item>$700</item>
-        <item>$800</item>
+        <item>100</item>
+        <item>200</item>
+        <item>300</item>
+        <item>400</item>
+        <item>500</item>
+        <item>600</item>
+        <item>700</item>
+        <item>800</item>
     </string-array>
 
     <string-array name="book_images">
@@ -86,6 +86,7 @@
 
     <string name="nav_home">Home</string>
     <string name="nav_trending">Trending</string>
+    <string name="nav_add">Add</string>
     <string name="nav_search">Search</string>
     <string name="nav_cart">My Cart</string>
     <string name="nav_account">Account</string>

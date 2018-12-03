@@ -2,6 +2,7 @@ package com.lafrituracodez.letsdeal;
 
 import com.google.firebase.database.Exclude;
 import com.google.firebase.database.IgnoreExtraProperties;
+import android.support.v7.app.AppCompatActivity;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -13,6 +14,7 @@ public class Post {
 	private String author;
 	private String title;
 	private String desc;
+	private int resource;
 
 	private double price;
 	private int starCount = 0;
@@ -30,6 +32,14 @@ public class Post {
 		this.price = price;
 	}
 
+	Post(String uid, String author, String title, String desc, double price, int resource) {
+		this.uid = uid;
+		this.author = author;
+		this.title = title;
+		this.desc = desc;
+		this.price = price;
+		this.resource = resource;
+	}
 
 	@Exclude
 	public Map<String, Object> toMap() {
@@ -38,6 +48,7 @@ public class Post {
 		result.put("author", author);
 		result.put("title", title);
 		result.put("desc", desc);
+		result.put("price", price);
 		result.put("starCount", starCount);
 		result.put("stars", stars);
 
@@ -100,4 +111,11 @@ public class Post {
 		this.uid = uid;
 	}
 
+	public int getResource() {
+		return resource;
+	}
+
+	public void setResource(int resource) {
+		this.resource = resource;
+	}
 }

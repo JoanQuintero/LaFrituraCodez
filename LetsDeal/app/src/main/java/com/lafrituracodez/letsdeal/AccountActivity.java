@@ -2,155 +2,157 @@ package com.lafrituracodez.letsdeal;
 
 
 import android.graphics.Paint;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
 
 public class AccountActivity extends AppCompatActivity {
 
-    private TextView PersonalSettings, ProfileEdit, UserEdit, PwEdit, PreferencesEdit, Settings,
-            Orders, AllOrders, Utilities, AppStyle, Cache, SysOptions, MemUsage;
+	private TextView PersonalSettings, ProfileEdit, UserEdit, PwEdit, PreferencesEdit, Settings,
+			Orders, AllOrders, Utilities, AppStyle, Cache, SysOptions, MemUsage;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_account);
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_account);
 
-        //PersonalSettings = findViewById(R.id.account_settings);
+		Toolbar toolbar = findViewById(R.id.toolbar);
+		setSupportActionBar(toolbar);
 
-        ProfileEdit = findViewById(R.id.edit_profile);
-        ProfileEdit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                EditProfile();
-            }
-        });
+		ProfileEdit = findViewById(R.id.edit_profile);
+		ProfileEdit.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				EditProfile();
+			}
+		});
 
-        UserEdit = findViewById(R.id.edit_user);
-        UserEdit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                EditUser();
+		UserEdit = findViewById(R.id.edit_user);
+		UserEdit.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				EditUser();
 
-            }
-        });
+			}
+		});
 
-        PwEdit = findViewById(R.id.change_password);
-        PwEdit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                EditPassword();
+		PwEdit = findViewById(R.id.change_password);
+		PwEdit.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				EditPassword();
 
-            }
-        });
+			}
+		});
 
-        PreferencesEdit = findViewById(R.id.change_preferences);
-        PreferencesEdit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                EditPreferences();
-            }
-        });
+		PreferencesEdit = findViewById(R.id.change_preferences);
+		PreferencesEdit.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				EditPreferences();
+			}
+		});
 
-        Settings = findViewById(R.id.account_settings);
-        Settings.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ChangeSettings();
+		Settings = findViewById(R.id.account_settings);
+		Settings.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				ChangeSettings();
 
-            }
-        });
+			}
+		});
 
-        //Orders = findViewById(R.id.your_Orders);
+		//Orders = findViewById(R.id.your_Orders);
 
-        AllOrders = findViewById(R.id.account_ViewAllOrders);
-        AllOrders.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ViewOrders();
+		AllOrders = findViewById(R.id.account_ViewAllOrders);
+		AllOrders.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				ViewOrders();
 
-            }
-        });
+			}
+		});
 
-        // Utilities = findViewById(R.id.account_utilities);
+		// Utilities = findViewById(R.id.account_utilities);
 
-        AppStyle = findViewById(R.id.app_set_style);
-        AppStyle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ChangeStyle();
-
-
-            }
-        });
-
-        Cache = findViewById(R.id.refresh_cache);
-        Cache.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                RefreshCache();
-
-            }
-        });
-
-        SysOptions = findViewById(R.id.system_options);
-        SysOptions.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ChangeSystemOptions();
-            }
-        });
-
-        MemUsage = findViewById(R.id.memory_usage);
-        MemUsage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                MemoryMonitor();
-            }
-        });
+		AppStyle = findViewById(R.id.app_set_style);
+		AppStyle.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				ChangeStyle();
 
 
-        UserEdit.setPaintFlags(UserEdit.getPaintFlags()| Paint.UNDERLINE_TEXT_FLAG);
-        //underlines text
+			}
+		});
+
+		Cache = findViewById(R.id.refresh_cache);
+		Cache.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				RefreshCache();
+
+			}
+		});
+
+		SysOptions = findViewById(R.id.system_options);
+		SysOptions.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				ChangeSystemOptions();
+			}
+		});
+
+		MemUsage = findViewById(R.id.memory_usage);
+		MemUsage.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				MemoryMonitor();
+			}
+		});
 
 
-        //If the prototype will be the final design, ease_in animation needs
-        // to be added to this activity
-        //  11/27/2018
-    }
+		UserEdit.setPaintFlags(UserEdit.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+		//underlines text
 
-    private void EditProfile() {
-    }
 
-    private void EditUser() {
-    }
+		//If the prototype will be the final design, ease_in animation needs
+		// to be added to this activity
+		//  11/27/2018
+	}
 
-    private void EditPassword() {
-    }
+	private void EditProfile() {
+	}
 
-    private void EditPreferences() {
-    }
+	private void EditUser() {
+	}
 
-    private void ChangeSettings() {
-    }
+	private void EditPassword() {
+	}
 
-    private void ViewOrders() {
-    }
+	private void EditPreferences() {
+	}
 
-    private void ChangeStyle() {
-    }
+	private void ChangeSettings() {
+	}
 
-    private void RefreshCache() {
-    }
+	private void ViewOrders() {
+	}
 
-    private void ChangeSystemOptions() {
-    }
+	private void ChangeStyle() {
+	}
 
-    private void MemoryMonitor() {
-    }
+	private void RefreshCache() {
+	}
 
-    // Added OnClick methods to all possible candidates
-    //  12/2/2018
+	private void ChangeSystemOptions() {
+	}
+
+	private void MemoryMonitor() {
+	}
+
+	// Added OnClick methods to all possible candidates
+	//  12/2/2018
 
 }

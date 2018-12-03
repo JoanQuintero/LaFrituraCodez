@@ -10,6 +10,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -44,7 +45,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 	// fix this before moving on
 
-
 	@Override
 	protected void onStart() {
 		super.onStart();
@@ -56,6 +56,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
 		setContentView(R.layout.activity_drawer);
 		Toolbar toolbar = findViewById(R.id.toolbar);
 		setSupportActionBar(toolbar);
@@ -107,25 +108,26 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 	@Override
 	public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
 		// Handle navigation view item clicks here.
-		int id = menuItem.getItemId();
-
-		if (id == R.id.nav_account) {
-
-		} else if (id == R.id.nav_add) {
-			Intent intent = new Intent(this, PostActivity.class);
-			startActivity(intent);
-
-		} else if (id == R.id.nav_search) {
-
-
+		Intent intent;
+		switch (menuItem.getItemId()) {
+			case R.id.nav_account:
+				intent = new Intent(this, AccountActivity.class);
+				startActivity(intent);
+				break;
+			case R.id.nav_add:
+				intent = new Intent(this, PostActivity.class);
+				startActivity(intent);
+				break;
+			case R.id.nav_search:
+				intent = new Intent(this, PostActivity.class);
+				startActivity(intent);
+				break;
 		}
-
 		DrawerLayout drawer = findViewById(R.id.drawer_layout);
 		drawer.closeDrawer(GravityCompat.START);
 		return true;
 
 	}
-
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {

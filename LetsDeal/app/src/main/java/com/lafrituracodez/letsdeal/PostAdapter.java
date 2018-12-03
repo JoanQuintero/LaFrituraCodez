@@ -33,7 +33,7 @@ public class PostAdapter extends
     public PostHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new PostHolder(LayoutInflater
                 .from(context)
-                .inflate(R.layout.list_books, parent, false));
+                .inflate(R.layout.post_list, parent, false));
 
     }
 

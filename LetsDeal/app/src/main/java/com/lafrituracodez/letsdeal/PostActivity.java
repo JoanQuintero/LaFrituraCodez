@@ -18,20 +18,25 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.*;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 
 public class PostActivity extends AppCompatActivity implements ValueEventListener {
 
+	static final int REQUEST_IMAGE_CAPTURE = 1;
+
 	private DatabaseReference database;
+	private StorageReference storage;
 	private GoogleSignInAccount account;
 
 	private TextInputEditText title_input;
 	private TextInputEditText author_input;
 	private TextInputEditText desc_input;
 	private TextInputEditText price_input;
-
-	static final int REQUEST_IMAGE_CAPTURE = 1;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +46,7 @@ public class PostActivity extends AppCompatActivity implements ValueEventListene
 		setSupportActionBar(toolbar);
 
 		database = FirebaseDatabase.getInstance().getReference();
+		storage = FirebaseStorage.getInstance().getReference();
 		account = GoogleSignIn.getLastSignedInAccount(this);
 
 		title_input = findViewById(R.id.editText_titleInput);
@@ -124,11 +130,12 @@ public class PostActivity extends AppCompatActivity implements ValueEventListene
 		chooserIntent.putExtra
 				(
 						Intent.EXTRA_INITIAL_INTENTS,
-						new Intent[] { takePhotoIntent }
+						new Intent[]{takePhotoIntent}
 				);
 
 		startActivityForResult(chooserIntent, REQUEST_IMAGE_CAPTURE);
 	}
+
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
@@ -138,10 +145,34 @@ public class PostActivity extends AppCompatActivity implements ValueEventListene
 				bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(selectedImage));
 				ImageView image = findViewById(R.id.imageview_changing);
 				image.setImageBitmap(bitmap);
+				sendToast("Uploading image");
+				uploadImage(bitmap);
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
 				sendToast("There was an error when retrieveing image.");
 			}
 		}
+	}
+
+	private void uploadImage(Bitmap bitmap) {
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+		byte[] data = baos.toByteArray();
+
+		StorageReference ref = FirebaseStorage.getInstance().getReferenceFromUrl("gs://lafrituracodez.appspot.com");
+		StorageReference imageRef = storage.child("images/test.jpg");
+
+		UploadTask uploadTask = imageRef.putBytes(data);
+		uploadTask.addOnFailureListener(new OnFailureListener() {
+			@Override
+			public void onFailure(Exception e) {
+
+			}
+		}).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+			@Override
+			public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+				Toast.makeText(getBaseContext(), "Image iploaded", Toast.LENGTH_SHORT).show();
+			}
+		});
 	}
 }

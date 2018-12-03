@@ -1,4 +1,4 @@
-package com.example.shanylajara.myaccount;
+package com.lafrituracodez.letsdeal;
 
 
 import android.graphics.Paint;
@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity {
+public class MyAccount extends AppCompatActivity {
 
     private TextView PersonalSettings, ProfileEdit, UserEdit, PwEdit, PreferencesEdit, Settings,
             Orders, AllOrders, Utilities, AppStyle, Cache, SysOptions, MemUsage;
@@ -15,7 +15,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_myaccount);
 
         //PersonalSettings = findViewById(R.id.account_settings);
 

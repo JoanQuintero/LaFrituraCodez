@@ -20,16 +20,14 @@
         <activity
             android:name=".PostActivity"
             android:label="@string/title_activity_post"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".LoginActivity"
             android:label="@string/title_activity_post"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity android:name=".AccountActivity">
             <intent-filter>
                 <action android:name="android.intent.action.ACCOUNT" />
-
                 <category
                     android:name="android.intent.category.LAUNCHER"
                     android:theme="@style/AppTheme.NoActionBar" />

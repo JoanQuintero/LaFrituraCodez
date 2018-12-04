@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:theme="@style/AppTheme">
+
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/field_padding"
+        android:layout_marginTop="?attr/actionBarSize"
+        android:orientation="vertical"
+        android:textAlignment="textStart">
+
+        <TextView
+            android:id="@+id/account_ViewAllOrders"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_marginEnd="@dimen/field_padding"
+            android:layout_marginBottom="-20dp"
+            android:text="View All"
+            android:textAlignment="textEnd"
+            android:textColor="@color/colorAccent" />
+
+        <TextView
+            android:id="@+id/account_settings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Personal Settings"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Title"
+            android:textColor="@color/colorAccent" />
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="2dip"
+            android:layout_marginBottom="@dimen/field_padding"
+            android:background="@color/colorAccent" />
+
+        <TextView
+            android:id="@+id/edit_profile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="5dp"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
+            android:textStyle="bold"
+            android:text="Edit Profile"
+            />
+
+        <TextView
+            android:id="@+id/edit_user"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="5dp"
+            android:text="Edit User"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/change_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="5dp"
+            android:text="Change Password"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/change_preferences"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="5dp"
+            android:text="Preferences"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/account_utilities"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/field_padding"
+            android:layout_marginVertical="5dp"
+            android:text="Utilities"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Title"
+            android:textColor="@color/colorAccent" />
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="2dip"
+            android:layout_marginBottom="@dimen/field_padding"
+            android:background="@color/colorAccent" />
+
+        <TextView
+            android:id="@+id/app_set_style"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="3dp"
+            android:text="App Style"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/refresh_cache"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="5dp"
+            android:text="Refresh Cache"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/system_options"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="5dp"
+            android:text="System Options"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/memory_usage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="5dp"
+            android:text="Memory Usage"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
+            android:textStyle="bold" />
+    </LinearLayout>
+</RelativeLayout>

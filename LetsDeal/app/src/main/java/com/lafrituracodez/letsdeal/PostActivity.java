@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputEditText;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -19,6 +21,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.*;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
@@ -27,12 +30,16 @@ import java.io.FileNotFoundException;
 
 public class PostActivity extends AppCompatActivity implements ValueEventListener {
 
-	static final int REQUEST_IMAGE_CAPTURE = 1;
+	private static final int REQUEST_IMAGE_CAPTURE = 1;
 
 	private DatabaseReference database;
-	private StorageReference storage;
+	private StorageReference storageRef;
 	private GoogleSignInAccount account;
+	private ImageView image;
+	private Bitmap bitmap;
 
+	private Integer notificationID = 100;
+	private boolean imageSet = false;
 	private TextInputEditText title_input;
 	private TextInputEditText author_input;
 	private TextInputEditText desc_input;
@@ -46,7 +53,7 @@ public class PostActivity extends AppCompatActivity implements ValueEventListene
 		setSupportActionBar(toolbar);
 
 		database = FirebaseDatabase.getInstance().getReference();
-		storage = FirebaseStorage.getInstance().getReference();
+		storageRef = FirebaseStorage.getInstance().getReference();
 		account = GoogleSignIn.getLastSignedInAccount(this);
 
 		title_input = findViewById(R.id.editText_titleInput);
@@ -93,13 +100,12 @@ public class PostActivity extends AppCompatActivity implements ValueEventListene
 		}
 		Post post = new Post(u_id, author, title, desc, price);
 
-
+		uploadImage(bitmap);
 		database.child("posts")
 				.child(key).setValue(post)
 				.addOnSuccessListener(new OnSuccessListener<Void>() {
 					@Override
 					public void onSuccess(Void aVoid) {
-						Toast.makeText(getBaseContext(), "Post successful", Toast.LENGTH_SHORT).show();
 						UserPost userPost = new UserPost(u_id, key);
 						database.child("user-posts/").push().setValue(userPost);
 					}
@@ -139,14 +145,12 @@ public class PostActivity extends AppCompatActivity implements ValueEventListene
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+			imageSet = true;
 			Uri selectedImage = data.getData();
-			Bitmap bitmap = null;
 			try {
 				bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(selectedImage));
-				ImageView image = findViewById(R.id.imageview_changing);
+				image = findViewById(R.id.imageView_coverPreview);
 				image.setImageBitmap(bitmap);
-				sendToast("Uploading image");
-				uploadImage(bitmap);
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
 				sendToast("There was an error when retrieveing image.");
@@ -154,25 +158,53 @@ public class PostActivity extends AppCompatActivity implements ValueEventListene
 		}
 	}
 
-	private void uploadImage(Bitmap bitmap) {
+	private boolean uploadImage(Bitmap bitmap) {
+		if (!imageSet) {
+			sendToast("Choose an image to upload");
+			return true;
+		}
+		final NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+		final NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, "CHANNEL 9");
+		mBuilder.setContentTitle("Picture Download")
+				.setContentText("Download in progress")
+				.setSmallIcon(R.drawable.ic_upload)
+				.setPriority(NotificationCompat.PRIORITY_LOW);
+
+		int PROGRESS_MAX = 100;
+		int PROGRESS_CURRENT = 0;
+		mBuilder.setProgress(PROGRESS_MAX, PROGRESS_CURRENT, false);
+		notificationManager.notify(notificationID, mBuilder.build());
+
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
 		byte[] data = baos.toByteArray();
 
-		StorageReference ref = FirebaseStorage.getInstance().getReferenceFromUrl("gs://lafrituracodez.appspot.com");
-		StorageReference imageRef = storage.child("images/test.jpg");
+		StorageReference imagesRef = storageRef.child("images");
+		UploadTask uploadTask = imagesRef.putBytes(data);
+		uploadTask
+				.addOnFailureListener(new OnFailureListener() {
+					@Override
+					public void onFailure(Exception e) {
 
-		UploadTask uploadTask = imageRef.putBytes(data);
-		uploadTask.addOnFailureListener(new OnFailureListener() {
-			@Override
-			public void onFailure(Exception e) {
-
-			}
-		}).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+					}
+				}).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
 			@Override
 			public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-				Toast.makeText(getBaseContext(), "Image iploaded", Toast.LENGTH_SHORT).show();
+				mBuilder.setContentText("Download complete")
+						.setProgress(0, 0, false);
+				notificationManager.notify(notificationID, mBuilder.build());
+				finish();
+			}
+		}).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+			@Override
+			public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+				double progress = (100.0 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
+				mBuilder.setProgress(100, (int) progress, false);
+				notificationManager.notify(notificationID, mBuilder.build());
+				sendToast("Post created.");
 			}
 		});
+		return true;
 	}
+
 }

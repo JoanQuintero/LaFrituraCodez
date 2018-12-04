@@ -2,7 +2,6 @@ package com.lafrituracodez.letsdeal;
 
 import com.google.firebase.database.Exclude;
 import com.google.firebase.database.IgnoreExtraProperties;
-import android.support.v7.app.AppCompatActivity;
 
 import java.util.HashMap;
 import java.util.Map;

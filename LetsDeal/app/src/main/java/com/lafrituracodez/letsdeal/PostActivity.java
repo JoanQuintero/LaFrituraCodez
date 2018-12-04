@@ -111,7 +111,7 @@ public class PostActivity extends AppCompatActivity implements ValueEventListene
 					@Override
 					public void onSuccess(Void aVoid) {
 						UserPost userPost = new UserPost(u_id, key);
-						database.child("user-posts/").push().setValue(userPost);
+						database.child("user-posts/").child(key).setValue(userPost);
 					}
 				})
 				.addOnFailureListener(new OnFailureListener() {

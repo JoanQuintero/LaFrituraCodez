@@ -75,13 +75,13 @@ public class PostActivity extends AppCompatActivity implements ValueEventListene
 	}
 
 	public boolean sendData(View view) {
+
 		final String u_id;
 		final String key;
 
 		String author = author_input.getText().toString();
 		String title = title_input.getText().toString();
 		String desc = desc_input.getText().toString();
-
 
 		try {
 			u_id = account.getId();
@@ -98,9 +98,13 @@ public class PostActivity extends AppCompatActivity implements ValueEventListene
 			e.printStackTrace();
 			price = 0.0;
 		}
+		if (author.equals("") || title.equals("") || desc.equals("") || price.equals(0.0)) {
+			sendToast("Make sure all the fields are filled.");
+			return true;
+		}
 		Post post = new Post(u_id, author, title, desc, price);
 
-		uploadImage(bitmap);
+		uploadImage(bitmap, key);
 		database.child("posts")
 				.child(key).setValue(post)
 				.addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -158,7 +162,7 @@ public class PostActivity extends AppCompatActivity implements ValueEventListene
 		}
 	}
 
-	private boolean uploadImage(Bitmap bitmap) {
+	private boolean uploadImage(Bitmap bitmap, String postKey) {
 		if (!imageSet) {
 			sendToast("Choose an image to upload");
 			return true;
@@ -179,7 +183,7 @@ public class PostActivity extends AppCompatActivity implements ValueEventListene
 		bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
 		byte[] data = baos.toByteArray();
 
-		StorageReference imagesRef = storageRef.child("images");
+		StorageReference imagesRef = storageRef.child("/images/" + postKey);
 		UploadTask uploadTask = imagesRef.putBytes(data);
 		uploadTask
 				.addOnFailureListener(new OnFailureListener() {
@@ -201,7 +205,6 @@ public class PostActivity extends AppCompatActivity implements ValueEventListene
 				double progress = (100.0 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
 				mBuilder.setProgress(100, (int) progress, false);
 				notificationManager.notify(notificationID, mBuilder.build());
-				sendToast("Post created.");
 			}
 		});
 		return true;

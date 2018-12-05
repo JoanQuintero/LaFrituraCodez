@@ -42,15 +42,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 	private int recents_gridColCount = 2;
 
-	// fix this before moving on
-
-
 	@Override
 	protected void onStart() {
 		super.onStart();
-		if (GoogleSignIn.getLastSignedInAccount(this) == null) {
-			sendToLogin();
-		}
+		assertLogin();
 	}
 
 	@Override
@@ -59,6 +54,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 		setContentView(R.layout.activity_drawer);
 		Toolbar toolbar = findViewById(R.id.toolbar);
 		setSupportActionBar(toolbar);
+
+		account = GoogleSignIn.getLastSignedInAccount(this);
+		assertLogin();
 
 		DrawerLayout drawer = findViewById(R.id.drawer_layout);
 		ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -71,22 +69,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 		recyclerView = findViewById(R.id.recycler_view);
 
-		//recyclerView.setLayoutManager(new GridLayoutManager(this, gridColCount)); // LOOK HERE FOR FINAL PROJECT !
-
 		LinearLayoutManager layoutManager
 				= new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
 
-
 		recyclerView.setLayoutManager(layoutManager);
 
-		postData = new ArrayList<>();  // LOOK HERE FOR FINAL PROJECT !
-		postAdapter = new PostAdapter(this, postData);  // LOOK HERE FOR FINAL PROJECT !
-		recyclerView.setAdapter(postAdapter);  // LOOK HERE FOR FINAL PROJECT !
+		postData = new ArrayList<>();
+		postAdapter = new PostAdapter(this, postData);
+		recyclerView.setAdapter(postAdapter);
 		loadLibraryData();
 
 		mDatabase = FirebaseDatabase.getInstance().getReference().child("posts");
 		mDatabase.addChildEventListener(this);
-
 		viewRecents = findViewById(R.id.recentPost_viewall);
 		viewRecents.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -96,12 +90,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 						new GridLayoutManager(getApplicationContext(), recents_gridColCount));
 			}
 		});
+
 	}
+
 
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-		account = GoogleSignIn.getLastSignedInAccount(this);
-		sendToast("Welcome " + account.getDisplayName());
+		if (account == null) {
+			sendToLogin();
+		}
 	}
 
 	@Override
@@ -109,15 +106,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 		// Handle navigation view item clicks here.
 		int id = menuItem.getItemId();
 
-		if (id == R.id.nav_account) {
-
-		} else if (id == R.id.nav_add) {
-			Intent intent = new Intent(this, PostActivity.class);
-			startActivity(intent);
-
-		} else if (id == R.id.nav_search) {
-
-
+		switch (id) {
+			case R.id.nav_account:
+				break;
+			case R.id.nav_add:
+				Intent intent = new Intent(this, PostActivity.class);
+				startActivity(intent);
+				break;
+			case R.id.nav_search:
+				break;
 		}
 
 		DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -125,7 +122,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 		return true;
 
 	}
-
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
@@ -140,7 +136,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 	@Override
 	public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
 		Log.d(TAG, "onChildAdded:" + dataSnapshot.getKey());
+
 		Post post = dataSnapshot.getValue(Post.class);
+		post.setKey(dataSnapshot.getKey());
+
 		postData.add(post);
 		postAdapter.notifyItemChanged(postData.size());
 
@@ -166,6 +165,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 	}
 
+
+	private void sendToast(String message) {
+		Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+	}
+
 	private void loadLibraryData() {    // LOOK HERE FOR FINAL PROJECT !
 		postData.clear();
 
@@ -173,11 +177,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 		String[] libraryTitles = getResources().getStringArray(R.array.book_names);
 		String[] libraryDesc = getResources().getStringArray(R.array.book_description);
 		String[] libraryPrices = getResources().getStringArray(R.array.book_prices);
+
 		// Post constructor: (String uid, String author, String title, String desc, double price, int resource) {
+		assertLogin();
+		account = GoogleSignIn.getLastSignedInAccount(this);
 
 		for (int i = 0; i < libraryImages.length(); i++) {
 			Post currentPost = new Post(
-					"12",
+					"",
 					"John Doe",
 					libraryTitles[i],
 					libraryDesc[i],
@@ -193,8 +200,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 	}
 
-	private void sendToast(String message) {
-		Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+	private void assertLogin() {
+		if (GoogleSignIn.getLastSignedInAccount(this) != null) {
+			sendToLogin();
+		}
 	}
 
 	private void sendToLogin() {

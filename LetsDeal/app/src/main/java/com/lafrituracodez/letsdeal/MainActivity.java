@@ -60,6 +60,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 		account = GoogleSignIn.getLastSignedInAccount(this);
 		assertLogin();
 		updateUI();
+//		sendToast("Welcome " + (account != null ? account.getDisplayName() : "!"));
 
 		DrawerLayout drawer = findViewById(R.id.drawer_layout);
 		ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -80,7 +81,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 		postData = new ArrayList<>();
 		postAdapter = new PostAdapter(this, postData);
 		recyclerView.setAdapter(postAdapter);
-		loadLibraryData();
+//		loadLibraryData();
 
 		mDatabase = FirebaseDatabase.getInstance().getReference().child("posts");
 		mDatabase.addChildEventListener(this);
@@ -208,7 +209,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 	}
 
 	private void assertLogin() {
-		if (GoogleSignIn.getLastSignedInAccount(this) != null) {
+		if (GoogleSignIn.getLastSignedInAccount(this) == null) {
 			sendToLogin();
 		}
 	}
@@ -217,7 +218,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 		Intent intent = new Intent(this, LoginActivity.class);
 		startActivityForResult(intent, LoginActivity.RC_SUCCESS_SIGN_IN);
 	}
-	
+
 	// TODO: Update GoogleSigninAccount to be a global variable.
 	private void updateUI() {
 		NavigationView navigationView = findViewById(R.id.nav_view);

@@ -37,27 +37,29 @@
             android:paddingStart="@dimen/field_padding">
 
             <TextView
-                android:id="@+id/textView"
+                android:id="@+id/textView_recentPostTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignStart="@id/recycler_view"
+                android:layout_alignStart="@id/recyclerView_recentPost"
                 android:layout_marginBottom="-29dp"
-                android:text="@string/recent_posts" />
+                android:text="@string/recent_posts"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Body2"
+                android:textColor="@color/colorAccent" />
 
             <TextView
-                android:id="@+id/recentPost_viewall"
+                android:id="@+id/textView_recentPostHelper"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignEnd="@id/recycler_view"
+                android:layout_alignEnd="@id/recyclerView_recentPost"
                 android:layout_marginBottom="-29dp"
                 android:layout_marginEnd="11dp"
                 android:text="@string/view_all" />
 
             <android.support.v7.widget.RecyclerView
-                android:id="@+id/recycler_view"
+                android:id="@+id/recyclerView_recentPost"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/recentPost_viewall"
+                android:layout_below="@id/textView_recentPostHelper"
                 android:layout_marginTop="29dp">
 
             </android.support.v7.widget.RecyclerView>
@@ -65,17 +67,18 @@
         </RelativeLayout>
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/textView_userPostTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_below="@id/cardViewRelative"
-            android:paddingEnd="@dimen/field_padding"
-            android:paddingStart="@dimen/field_padding"
-            android:text="@string/user_posts" />
+            android:layout_marginHorizontal="@dimen/field_padding"
+            android:text="@string/user_posts"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Body2"
+            android:textColor="@color/colorAccent" />
 
         <TextView
-            android:id="@+id/textView4"
+            android:id="@+id/textView_userPostHelper"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
@@ -85,43 +88,42 @@
             android:paddingStart="@dimen/field_padding"
             android:text="@string/view_all" />
 
-        <android.support.v7.widget.CardView
-            android:id="@+id/cardYourPost"
-            android:layout_width="match_parent"
-            android:layout_height="146dp"
-            android:layout_below="@id/textView3"
-            android:layout_marginTop="10dp"
-            android:backgroundTint="@android:color/holo_blue_bright"
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView_UserPosts"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textView_userPostTitle"
             android:paddingEnd="@dimen/field_padding"
             android:paddingStart="@dimen/field_padding" />
 
+
         <TextView
-            android:id="@+id/textView5"
+            android:id="@+id/textView_watchedPostTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
-            android:layout_below="@id/cardYourPost"
-            android:paddingEnd="@dimen/field_padding"
-            android:paddingStart="@dimen/field_padding"
-            android:text="@string/watched_posts" />
+            android:layout_below="@id/recyclerView_UserPosts"
+            android:layout_marginHorizontal="@dimen/field_padding"
+            android:layout_marginTop="@dimen/field_padding"
+            android:text="@string/watched_posts"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Body2"
+            android:textColor="@color/colorAccent" />
 
         <TextView
-            android:id="@+id/textView6"
+            android:id="@+id/textView_watchedPostHelper"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:layout_below="@id/cardYourPost"
-            android:layout_marginEnd="13dp"
-            android:paddingEnd="@dimen/field_padding"
-            android:paddingStart="@dimen/field_padding"
+            android:layout_below="@id/recyclerView_UserPosts"
+            android:layout_marginHorizontal="@dimen/field_padding"
             android:text="@string/view_all" />
 
-        <android.support.v7.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="146dp"
-            android:layout_below="@id/textView5"
-            android:layout_marginTop="10dp"
-            android:backgroundTint="@android:color/holo_green_light"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView_WatchedPosts"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textView_userPostTitle"
             android:paddingEnd="@dimen/field_padding"
             android:paddingStart="@dimen/field_padding" />
 

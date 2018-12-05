@@ -111,7 +111,7 @@ public class PostActivity extends AppCompatActivity implements ValueEventListene
 					@Override
 					public void onSuccess(Void aVoid) {
 						UserPost userPost = new UserPost(u_id, key);
-						database.child("user-posts/").push().setValue(userPost);
+						database.child("user-posts/").child(key).setValue(userPost);
 					}
 				})
 				.addOnFailureListener(new OnFailureListener() {
@@ -137,11 +137,10 @@ public class PostActivity extends AppCompatActivity implements ValueEventListene
 
 		String pickTitle = "Select or take a new Picture"; // Or get from strings.xml
 		Intent chooserIntent = Intent.createChooser(pickIntent, pickTitle);
-		chooserIntent.putExtra
-				(
-						Intent.EXTRA_INITIAL_INTENTS,
-						new Intent[]{takePhotoIntent}
-				);
+		chooserIntent.putExtra(
+				Intent.EXTRA_INITIAL_INTENTS,
+				new Intent[]{takePhotoIntent}
+		);
 
 		startActivityForResult(chooserIntent, REQUEST_IMAGE_CAPTURE);
 	}
@@ -180,7 +179,7 @@ public class PostActivity extends AppCompatActivity implements ValueEventListene
 		notificationManager.notify(notificationID, mBuilder.build());
 
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+		bitmap.compress(Bitmap.CompressFormat.JPEG, 60, baos);
 		byte[] data = baos.toByteArray();
 
 		StorageReference imagesRef = storageRef.child("/images/" + postKey);

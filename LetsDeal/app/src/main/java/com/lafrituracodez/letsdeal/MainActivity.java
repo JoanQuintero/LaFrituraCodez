@@ -43,16 +43,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 	private int recents_gridColCount = 2;
 
-	// fix this before moving on
-
 	@Override
 	protected void onStart() {
 		super.onStart();
-		if (GoogleSignIn.getLastSignedInAccount(this) == null) {
-			sendToLogin();
-		} else {
-			updateUI();
-		}
+		assertLogin();
 	}
 
 	@Override
@@ -62,6 +56,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 		setContentView(R.layout.activity_drawer);
 		Toolbar toolbar = findViewById(R.id.toolbar);
 		setSupportActionBar(toolbar);
+
+		account = GoogleSignIn.getLastSignedInAccount(this);
+		assertLogin();
+		updateUI();
 
 		DrawerLayout drawer = findViewById(R.id.drawer_layout);
 		ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -74,22 +72,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 		recyclerView = findViewById(R.id.recycler_view);
 
-		//recyclerView.setLayoutManager(new GridLayoutManager(this, gridColCount)); // LOOK HERE FOR FINAL PROJECT !
-
 		LinearLayoutManager layoutManager
 				= new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
 
-
 		recyclerView.setLayoutManager(layoutManager);
 
-		postData = new ArrayList<>();  // LOOK HERE FOR FINAL PROJECT !
-		postAdapter = new PostAdapter(this, postData);  // LOOK HERE FOR FINAL PROJECT !
-		recyclerView.setAdapter(postAdapter);  // LOOK HERE FOR FINAL PROJECT !
+		postData = new ArrayList<>();
+		postAdapter = new PostAdapter(this, postData);
+		recyclerView.setAdapter(postAdapter);
 		loadLibraryData();
 
 		mDatabase = FirebaseDatabase.getInstance().getReference().child("posts");
 		mDatabase.addChildEventListener(this);
-
 		viewRecents = findViewById(R.id.recentPost_viewall);
 		viewRecents.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -101,10 +95,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 		});
 	}
 
+
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (account == null) {
+			sendToLogin();
+		}
 		account = GoogleSignIn.getLastSignedInAccount(this);
 		sendToast("Welcome " + (account != null ? account.getDisplayName() : "!"));
+
 	}
 
 	@Override
@@ -144,7 +143,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 	@Override
 	public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
 		Log.d(TAG, "onChildAdded:" + dataSnapshot.getKey());
+
 		Post post = dataSnapshot.getValue(Post.class);
+		post.setKey(dataSnapshot.getKey());
+
 		postData.add(post);
 		postAdapter.notifyItemChanged(postData.size());
 
@@ -170,6 +172,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 	}
 
+
+	private void sendToast(String message) {
+		Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+	}
+
 	private void loadLibraryData() {    // LOOK HERE FOR FINAL PROJECT !
 		postData.clear();
 
@@ -177,11 +184,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 		String[] libraryTitles = getResources().getStringArray(R.array.book_names);
 		String[] libraryDesc = getResources().getStringArray(R.array.book_description);
 		String[] libraryPrices = getResources().getStringArray(R.array.book_prices);
+
 		// Post constructor: (String uid, String author, String title, String desc, double price, int resource) {
+		assertLogin();
+		account = GoogleSignIn.getLastSignedInAccount(this);
 
 		for (int i = 0; i < libraryImages.length(); i++) {
 			Post currentPost = new Post(
-					"12",
+					"",
 					"John Doe",
 					libraryTitles[i],
 					libraryDesc[i],
@@ -197,23 +207,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 	}
 
-	private void sendToast(String message) {
-		Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+	private void assertLogin() {
+		if (GoogleSignIn.getLastSignedInAccount(this) != null) {
+			sendToLogin();
+		}
 	}
 
 	private void sendToLogin() {
 		Intent intent = new Intent(this, LoginActivity.class);
 		startActivityForResult(intent, LoginActivity.RC_SUCCESS_SIGN_IN);
 	}
-
-	public void sendToPost(View v) {
-		Intent intent = new Intent(this, PostActivity.class);
-		startActivity(intent);
-	}
-
+	
+	// TODO: Update GoogleSigninAccount to be a global variable.
 	private void updateUI() {
-		GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
-
 		NavigationView navigationView = findViewById(R.id.nav_view);
 		View headerView = navigationView.getHeaderView(0);
 
@@ -221,8 +227,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 		TextView userProfile = headerView.findViewById(R.id.textView_userEmail);
 
 		userName.setText(account != null ? account.getDisplayName() : "!");
-		userProfile.setText(account.getEmail());
-
+		userProfile.setText(account != null ? account.getEmail() : "!");
 	}
 
 }

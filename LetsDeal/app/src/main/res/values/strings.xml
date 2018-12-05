@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Let\'s Deal</string>
-
+    <string name="client_id">115099223239-b5tja80nb4qmou88io1outjd3e12efh1.apps.googleusercontent.com</string>
     <string name="Login">login</string>
     <string name="text_accounts">All Accounts</string>
     <string name="hint_name">Name</string>

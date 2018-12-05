@@ -23,8 +23,8 @@ public class PostAdapter extends
 	private ArrayList<Post> postData; //this is the arraylist that will have the title, info and image.
 
 	public PostAdapter(Context ctx, ArrayList<Post> post) {
-		context = ctx;
-		postData = post;
+		this.context = ctx;
+		this.postData = post;
 	}
 
 	@NonNull
@@ -78,7 +78,7 @@ public class PostAdapter extends
 			textPrice.setText(Double.toString(currentBook.getPrice()));
 
 			String current_key = currentBook.getKey();
-			Picasso.get().load("https://firebasestorage.googleapis.com/v0/b/lafrituracodez.appspot.com/o/images%2F" + current_key+"?alt=media").into(imageViewBook);
+			Picasso.get().load("https://firebasestorage.googleapis.com/v0/b/lafrituracodez.appspot.com/o/images%2F" + current_key + "?alt=media").into(imageViewBook);
 
 		}
 

@@ -10,6 +10,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -51,12 +52,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
 		setContentView(R.layout.activity_drawer);
 		Toolbar toolbar = findViewById(R.id.toolbar);
 		setSupportActionBar(toolbar);
 
 		account = GoogleSignIn.getLastSignedInAccount(this);
 		assertLogin();
+		updateUI();
 
 		DrawerLayout drawer = findViewById(R.id.drawer_layout);
 		ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -90,7 +93,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 						new GridLayoutManager(getApplicationContext(), recents_gridColCount));
 			}
 		});
-
 	}
 
 
@@ -99,24 +101,29 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 		if (account == null) {
 			sendToLogin();
 		}
+		account = GoogleSignIn.getLastSignedInAccount(this);
+		sendToast("Welcome " + (account != null ? account.getDisplayName() : "!"));
+
 	}
 
 	@Override
 	public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
 		// Handle navigation view item clicks here.
-		int id = menuItem.getItemId();
-
-		switch (id) {
+		Intent intent;
+		switch (menuItem.getItemId()) {
 			case R.id.nav_account:
+				intent = new Intent(this, AccountActivity.class);
+				startActivity(intent);
 				break;
 			case R.id.nav_add:
-				Intent intent = new Intent(this, PostActivity.class);
+				intent = new Intent(this, PostActivity.class);
 				startActivity(intent);
 				break;
 			case R.id.nav_search:
+				intent = new Intent(this, PostActivity.class);
+				startActivity(intent);
 				break;
 		}
-
 		DrawerLayout drawer = findViewById(R.id.drawer_layout);
 		drawer.closeDrawer(GravityCompat.START);
 		return true;
@@ -210,10 +217,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 		Intent intent = new Intent(this, LoginActivity.class);
 		startActivityForResult(intent, LoginActivity.RC_SUCCESS_SIGN_IN);
 	}
+	
+	// TODO: Update GoogleSigninAccount to be a global variable.
+	private void updateUI() {
+		NavigationView navigationView = findViewById(R.id.nav_view);
+		View headerView = navigationView.getHeaderView(0);
 
-	public void sendToPost(View v) {
-		Intent intent = new Intent(this, PostActivity.class);
-		startActivity(intent);
+		TextView userName = headerView.findViewById(R.id.textView_userName);
+		TextView userProfile = headerView.findViewById(R.id.textView_userEmail);
+
+		userName.setText(account != null ? account.getDisplayName() : "!");
+		userProfile.setText(account != null ? account.getEmail() : "!");
 	}
 
 }

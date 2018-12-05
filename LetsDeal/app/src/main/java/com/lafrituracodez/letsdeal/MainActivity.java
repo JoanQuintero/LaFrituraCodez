@@ -50,6 +50,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 		super.onStart();
 		if (GoogleSignIn.getLastSignedInAccount(this) == null) {
 			sendToLogin();
+		} else {
+			updateUI();
 		}
 	}
 
@@ -102,7 +104,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		account = GoogleSignIn.getLastSignedInAccount(this);
-		sendToast("Welcome " + account.getDisplayName());
+		sendToast("Welcome " + (account != null ? account.getDisplayName() : "!"));
 	}
 
 	@Override
@@ -207,6 +209,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 	public void sendToPost(View v) {
 		Intent intent = new Intent(this, PostActivity.class);
 		startActivity(intent);
+	}
+
+	private void updateUI() {
+		GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+
+		NavigationView navigationView = findViewById(R.id.nav_view);
+		View headerView = navigationView.getHeaderView(0);
+
+		TextView userName = headerView.findViewById(R.id.textView_userName);
+		TextView userProfile = headerView.findViewById(R.id.textView_userEmail);
+
+		userName.setText(account != null ? account.getDisplayName() : "!");
+		userProfile.setText(account.getEmail());
+
 	}
 
 }

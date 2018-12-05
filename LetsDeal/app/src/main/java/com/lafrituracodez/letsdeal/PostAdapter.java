@@ -78,8 +78,8 @@ public class PostAdapter extends
 			textPrice.setText(Double.toString(currentBook.getPrice()));
 
 			String current_key = currentBook.getKey();
-			Picasso.get().load("https://firebasestorage.googleapis.com/v0/b/lafrituracodez.appspot.com/o/images%2F" + current_key).into(imageViewBook);
-			
+			Picasso.get().load("https://firebasestorage.googleapis.com/v0/b/lafrituracodez.appspot.com/o/images%2F" + current_key+"?alt=media").into(imageViewBook);
+
 		}
 
 		//listeners on an item if we want to do some magic

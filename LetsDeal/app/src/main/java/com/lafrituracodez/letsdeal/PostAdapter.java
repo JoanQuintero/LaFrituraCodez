@@ -4,10 +4,6 @@ package com.lafrituracodez.letsdeal;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
-import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -15,13 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
-import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 
 public class PostAdapter extends
@@ -80,47 +71,15 @@ public class PostAdapter extends
 			// so that they can be shown together... so basically, each cardview has its own
 			// or you can also understand it by saying that each of this item correspond to each other
 			// so they belong in a cardview together.
+
+			// TODO: Upload a default key+file.
 			textTitle.setText(currentBook.getTitle());
 			textInfo.setText(currentBook.getDesc());
 			textPrice.setText(Double.toString(currentBook.getPrice()));
 
-			setImage(currentBook);
-			Picasso.get().load("https://www.sample-videos.com/img/Sample-jpg-image-500kb.jpg").into(imageViewBook);
-
-//			Bitmap myBitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
-//			imageViewBook.setImageBitmap(myBitmap);
-//			byte[] test = getByteArrayImage("https://www.sample-videos.com/img/Sample-jpg-image-500kb.jpg");
-//			Picasso.get().load("https://www.sample-videos.com/img/Sample-jpg-image-500kb.jpg").into(imageViewBook);
-
-
-		}
-		public void setImage(Post currentBook){
 			String current_key = currentBook.getKey();
-			final StorageReference imageRef = FirebaseStorage.
-					getInstance().
-					getReference("/images/" + current_key);
-
-			final long ONE_MEGABYTE = 1024 * 1024;
-			imageRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
-				@Override
-				public void onSuccess(byte[] bytes) {
-					Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-					Uri imageUri = getImageUri(imageViewBook.getContext(), bitmap);
-					Picasso.get().load(imageUri).into(imageViewBook);
-				}
-			}).addOnFailureListener(new OnFailureListener() {
-				@Override
-				public void onFailure(@NonNull Exception exception) {
-					// Handle any errors
-				}
-			});
-		}
-
-		public Uri getImageUri(Context inContext, Bitmap inImage) {
-			ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-			inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-			String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
-			return Uri.parse(path);
+			Picasso.get().load("https://firebasestorage.googleapis.com/v0/b/lafrituracodez.appspot.com/o/images%2F" + current_key).into(imageViewBook);
+			
 		}
 
 		//listeners on an item if we want to do some magic
@@ -191,9 +150,6 @@ public class PostAdapter extends
 			// notifyItemRemoved(position);
 		}
 
-		public void setImage(Bitmap bitmap) {
-			imageViewBook.setImageBitmap(bitmap);
-		}
 	}
 
 

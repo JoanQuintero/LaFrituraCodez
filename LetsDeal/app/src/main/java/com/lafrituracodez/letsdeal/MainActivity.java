@@ -1,5 +1,7 @@
 package com.lafrituracodez.letsdeal;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -25,18 +27,21 @@ import com.google.firebase.database.*;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, ChildEventListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, ChildEventListener, View.OnClickListener {
 
 	private final static String TAG = "MainActivity";
 
-	private static ArrayList<Post> recentPostData;
-	private static ArrayList<Post> userPostData;
-
 	private GoogleSignInAccount account;
 	private DatabaseReference mDatabase;
+	private LinearLayoutManager linearLayoutManager;
+	private GridLayoutManager gridLayoutManager;
 
 	private PostAdapter recentPostAdapter;
 	private PostAdapter userPostAdapter;
+
+	private Boolean gridLayoutEnabled = false;
+	private ArrayList<Post> recentPostData;
+	private ArrayList<Post> userPostData;
 
 	private TextView viewRecents;
 	private RecyclerView recyclerView_RecentPosts;
@@ -74,10 +79,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 		recyclerView_RecentPosts = findViewById(R.id.recyclerView_recentPost);
 
-		LinearLayoutManager layoutManager
-				= new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+		linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+		gridLayoutManager = new GridLayoutManager(this, recents_gridColCount);
 
-		recyclerView_RecentPosts.setLayoutManager(layoutManager);
+		recyclerView_RecentPosts.setLayoutManager(linearLayoutManager);
 		recentPostData = new ArrayList<>();
 		recentPostAdapter = new PostAdapter(this, recentPostData);
 		recyclerView_RecentPosts.setAdapter(recentPostAdapter);
@@ -95,14 +100,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 		mDatabase.addChildEventListener(this);
 
 		viewRecents = findViewById(R.id.textView_recentPostHelper);
-		viewRecents.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				recyclerView_RecentPosts.getRecycledViewPool().clear();
-				recyclerView_RecentPosts.setLayoutManager(
-						new GridLayoutManager(getApplicationContext(), recents_gridColCount));
-			}
-		});
+		viewRecents.setOnClickListener(this);
 	}
 
 	@Override
@@ -200,7 +198,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 		startActivityForResult(intent, LoginActivity.RC_SUCCESS_SIGN_IN);
 	}
 
-	// TODO: Update GoogleSigninAccount to be a global variable.
 	private void updateUI() {
 		navigationView = findViewById(R.id.nav_view);
 		View headerView = navigationView.getHeaderView(0);
@@ -212,4 +209,32 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 		userProfile.setText(account != null ? account.getEmail() : "!");
 	}
 
+	@Override
+	public void onBackPressed() {
+		new AlertDialog.Builder(this)
+				.setTitle("Exiting App")
+				.setMessage("Are you sure you want to exit?")
+				.setNegativeButton(android.R.string.no, null)
+				.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+
+					public void onClick(DialogInterface arg0, int arg1) {
+						MainActivity.super.onBackPressed();
+						finish();
+					}
+				}).create().show();
+	}
+
+	@Override
+	public void onClick(View v) {
+		if (v == viewRecents) {
+			if (!gridLayoutEnabled) {
+				recyclerView_RecentPosts.setLayoutManager(gridLayoutManager);
+				viewRecents.setText("Go Back");
+			} else {
+				recyclerView_RecentPosts.setLayoutManager(linearLayoutManager);
+				viewRecents.setText("See all");
+			}
+			gridLayoutEnabled = !(gridLayoutEnabled);
+		}
+	}
 }

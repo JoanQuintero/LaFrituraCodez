@@ -22,11 +22,33 @@
 
     </android.support.design.widget.AppBarLayout>
 
+    <android.support.v7.widget.CardView
+        android:id="@+id/cardView_image"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/field_padding"
+        android:layout_marginTop="?android:attr/actionBarSize"
+        android:clickable="true"
+        android:focusable="true"
+        android:onClick="createIntent"
+        android:outlineAmbientShadowColor="@color/WhiteSmoke"
+        app:cardCornerRadius="10dp">
+
+        <ImageView
+            android:id="@+id/imageView_coverPreview"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_background_empty" />
+
+    </android.support.v7.widget.CardView>
+
     <LinearLayout
         android:id="@+id/linearLayout_postContent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="?android:attr/actionBarSize"
+        android:layout_below="@id/cardView_image"
         android:orientation="vertical">
 
         <TextView
@@ -38,7 +60,7 @@
             android:paddingStart="@dimen/field_padding"
             android:text="@string/post_hint"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
-            android:textColor="#6C6C6C"
+            android:textColor="@color/colorAccent"
             android:textStyle="bold" />
 
         <android.support.design.widget.TextInputLayout
@@ -136,37 +158,6 @@
                 android:inputType="numberDecimal" />
 
         </android.support.design.widget.TextInputLayout>
-
-        <Button
-            android:id="@+id/button_upload"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/field_padding"
-            android:layout_marginStart="@dimen/field_padding"
-            android:layout_marginVertical="10dp"
-            android:background="#e0e0e0"
-            android:onClick="createIntent"
-            android:paddingStart="@dimen/field_padding"
-            android:text="Upload a file"
-            android:textColor="#212121" />
-
-        <android.support.v7.widget.CardView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/field_padding"
-            android:paddingEnd="@dimen/field_padding"
-            android:paddingStart="@dimen/field_padding"
-            app:cardCornerRadius="10dp">
-
-            <ImageView
-                android:id="@+id/imageView_coverPreview"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:adjustViewBounds="true"
-                android:scaleType="centerCrop"
-                android:src="@drawable/zombies" />
-
-        </android.support.v7.widget.CardView>
 
     </LinearLayout>
 

@@ -3,54 +3,26 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <FrameLayout
-        android:id="@+id/top"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/toolbar_DetailLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
 
-        <RelativeLayout
-            android:id="@+id/imgdetail_loc"
-            android:layout_width="match_parent"
-            android:layout_height="237dp"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="0dp"
-            android:background="@drawable/swimteam">
-
-            <TextView
-                android:id="@+id/return_to"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:clickable="true"
-                android:contextClickable="true"
-                android:shadowColor="@android:color/black"
-                android:shadowDx="0"
-                android:shadowDy="0"
-                android:shadowRadius="50"
-                android:text="←"
-                android:textAlignment="center"
-                android:textColor="@color/colorTextDarkGray"
-                android:textSize="40sp" />
-
-            <TextView
-                android:id="@+id/booktitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="25dp"
-                android:layout_toEndOf="@+id/return_to"
-                android:text="TextView"
-                android:textAlignment="center"
-                android:textColor="@color/Red" />
-        </RelativeLayout>
-    </FrameLayout>
+        <android.support.v7.widget.Toolbar
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/toolbar_DetailActivity"
+            android:layout_width="fill_parent"
+            android:layout_height="?android:attr/actionBarSize"
+            app:popupTheme="@style/AppTheme.PopupOverlay"/>
+    </android.support.design.widget.AppBarLayout>
 
     <RelativeLayout
         android:id="@+id/bookdesc_loc"
         android:layout_width="match_parent"
-        android:layout_height="156dp"
-        android:layout_below="@+id/top">
+        android:layout_height="?android:attr/actionBarSize"
+        android:layout_below="@id/toolbar_DetailLayout"
+        android:layout_marginTop="?android:attr/actionBarSize">
 
         <TextView
             android:id="@+id/detail_desc_title"

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -47,34 +46,34 @@
         </RelativeLayout>
     </FrameLayout>
 
-        <RelativeLayout
-            android:id="@+id/bookdesc_loc"
+    <RelativeLayout
+        android:id="@+id/bookdesc_loc"
+        android:layout_width="match_parent"
+        android:layout_height="156dp"
+        android:layout_below="@+id/top">
+
+        <TextView
+            android:id="@+id/detail_desc_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Description" />
+
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="156dp"
-            android:layout_below="@+id/top">
+            android:layout_height="wrap_content"
+            android:layout_below="@id/detail_desc_title">
 
             <TextView
-                android:id="@+id/detail_desc_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Description" />
-
-            <ScrollView
+                android:id="@+id/synapsis"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/detail_desc_title">
-
-                <TextView
-                    android:id="@+id/synapsis"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginEnd="0dp"
-                    android:ems="10"
-                    android:text="@string/lorem_test" />
-            </ScrollView>
-        </RelativeLayout>
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="0dp"
+                android:ems="10"
+                android:text="@string/lorem_test" />
+        </ScrollView>
+    </RelativeLayout>
 
 
     <RelativeLayout
@@ -128,8 +127,8 @@
             android:id="@+id/Totalvalue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
             android:layout_marginRight="20dp"
             android:layout_marginTop="10dp"
             android:text="TextView" />
@@ -138,8 +137,8 @@
             android:id="@+id/Subtotalvalue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/Totalvalue"
             android:layout_alignParentEnd="true"
+            android:layout_below="@+id/Totalvalue"
             android:layout_marginRight="20dp"
             android:layout_marginTop="10dp"
             android:text="TextView" />
@@ -148,8 +147,8 @@
             android:id="@+id/Shippingvalue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/Subtotalvalue"
             android:layout_alignParentEnd="true"
+            android:layout_below="@+id/Subtotalvalue"
             android:layout_marginRight="20dp"
             android:layout_marginTop="10dp"
             android:text="TextView" />
@@ -158,8 +157,8 @@
             android:id="@+id/Taxesandfeesvalue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/Shippingvalue"
             android:layout_alignParentEnd="true"
+            android:layout_below="@+id/Shippingvalue"
             android:layout_marginRight="20dp"
             android:layout_marginTop="10dp"
             android:text="TextView" />

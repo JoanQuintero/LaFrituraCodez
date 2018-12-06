@@ -1,88 +1,109 @@
 package com.lafrituracodez.letsdeal;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
-import android.support.design.widget.FloatingActionButton;
+import android.support.annotation.Nullable;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.firebase.database.*;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, ChildEventListener {
 
+	private final static String TAG = "MainActivity";
 
-	private static ArrayList<Library> libraryListData;
+	private static ArrayList<Post> recentPostData;
+	private static ArrayList<Post> userPostData;
+
 	private GoogleSignInAccount account;
-	private RecyclerView recyclerView, recyclerView2, recyclerView3;
+	private RecyclerView recyclerView3;
 
-	private LibraryAdapter libraryAdapter;
-	private FloatingActionButton addItems;
+	private DatabaseReference mDatabase;
+
+	private PostAdapter recentPostAdapter;
+	private PostAdapter userPostAdapter;
+
 	private TextView viewRecents;
+	private RecyclerView recyclerView_RecentPosts;
+	private RecyclerView recyclerView_UserPosts;
+	private NavigationView navigationView;
 
-	//protected static final String I_AM_HOME= "com.example.I_AM_HOME";
 	private int recents_gridColCount = 2;
-
-	private BottomNavigationView navigationView;
-
-	// fix this before moving on
-
-	public static ArrayList<Library> getVariable() {
-		return libraryListData;
-	}
 
 	@Override
 	protected void onStart() {
 		super.onStart();
-		if (GoogleSignIn.getLastSignedInAccount(this) == null) {
-			sendToLogin();
-		}
+		assertLogin();
 	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
+		AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+		setContentView(R.layout.activity_drawer);
+		Toolbar toolbar = findViewById(R.id.toolbar);
+		setSupportActionBar(toolbar);
 
-		recyclerView = findViewById(R.id.recycler_view);
-		recyclerView2 = findViewById(R.id.recycler_view2);
-		recyclerView3 = findViewById(R.id.recycler_view3);
+		account = GoogleSignIn.getLastSignedInAccount(this);
+		assertLogin();
+		updateUI();
 
-		final LinearLayoutManager layoutManager
+		DrawerLayout drawer = findViewById(R.id.drawer_layout);
+		ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+				this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+		drawer.addDrawerListener(toggle);
+		toggle.syncState();
+
+		NavigationView navigationView = findViewById(R.id.nav_view);
+		navigationView.setNavigationItemSelectedListener(this);
+
+		recyclerView_RecentPosts = findViewById(R.id.recyclerView_recentPost);
+
+		LinearLayoutManager layoutManager
 				= new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-		final LinearLayoutManager layoutManager2
+
+		recyclerView_RecentPosts.setLayoutManager(layoutManager);
+		recentPostData = new ArrayList<>();
+		recentPostAdapter = new PostAdapter(this, recentPostData);
+		recyclerView_RecentPosts.setAdapter(recentPostAdapter);
+
+		LinearLayoutManager las
 				= new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-		final LinearLayoutManager layoutManager3
-				= new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-		
-		recyclerView.setLayoutManager(layoutManager);
-		recyclerView2.setLayoutManager(layoutManager2);
-		recyclerView3.setLayoutManager(layoutManager3);
 
-		libraryListData = new ArrayList<>(); 
-		libraryAdapter = new LibraryAdapter(this, libraryListData);  
-		recyclerView.setAdapter(libraryAdapter);  
-		loadLibraryData();
+		recyclerView_UserPosts = findViewById(R.id.recyclerView_UserPosts);
+		recyclerView_UserPosts.setLayoutManager(las);
+		userPostData = new ArrayList<>();
+		userPostAdapter = new PostAdapter(this, userPostData);
+		recyclerView_UserPosts.setAdapter(userPostAdapter);
 
-		navigationView = findViewById(R.id.navigation);
-		navigationView.setOnNavigationItemSelectedListener(this);
+		mDatabase = FirebaseDatabase.getInstance().getReference().child("posts");
+		mDatabase.addChildEventListener(this);
 
-		viewRecents = findViewById(R.id.recentPost_viewall);
+		viewRecents = findViewById(R.id.textView_recentPostHelper);
 		viewRecents.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				recyclerView.getRecycledViewPool().clear();
-				recyclerView.setLayoutManager(
+				recyclerView_RecentPosts.getRecycledViewPool().clear();
+				recyclerView_RecentPosts.setLayoutManager(
 						new GridLayoutManager(getApplicationContext(), recents_gridColCount));
 				viewRecents.setText("Go Back");
 				viewRecents.setOnClickListener(new View.OnClickListener() {
@@ -97,34 +118,92 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (account == null) {
+			sendToLogin();
+		}
 		account = GoogleSignIn.getLastSignedInAccount(this);
-		sendToast("Welcome " + account.getDisplayName());
+		sendToast("Welcome " + (account != null ? account.getDisplayName() : "!"));
+
 	}
 
 	@Override
 	public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+		Intent intent;
 		switch (menuItem.getItemId()) {
-			case R.id.action_home:
-				sendToast("Home pressed");
+			case R.id.nav_home:
 				break;
-			case R.id.action_trending:
-				sendToast("Trending pressed");
+			case R.id.nav_account:
+				intent = new Intent(this, AccountActivity.class);
+				startActivity(intent);
 				break;
-			case R.id.action_search:
-				sendToast("Search pressed");
+			case R.id.nav_add:
+				intent = new Intent(this, PostActivity.class);
+				startActivity(intent);
 				break;
-			case R.id.action_cart:
-				sendToast("Cart pressed");
-				break;
-			case R.id.action_account:
-				sendToast("Account pressed");
+			case R.id.nav_search:
+				intent = new Intent(this, PostActivity.class);
+				startActivity(intent);
 				break;
 		}
-		return true;
+		DrawerLayout drawer = findViewById(R.id.drawer_layout);
+		drawer.closeDrawer(GravityCompat.START);
+		return false;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		int id = item.getItemId();
+		if (id == R.id.action_settings) {
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
+	}
+
+	@Override
+	public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+		Log.d(TAG, "onChildAdded:" + dataSnapshot.getKey());
+
+		Post post = dataSnapshot.getValue(Post.class);
+		post.setKey(dataSnapshot.getKey());
+
+		recentPostData.add(post);
+		recentPostAdapter.notifyItemChanged(recentPostData.size());
+
+		if (post.getUid().equals(account.getId())) {
+			userPostData.add(post);
+			userPostAdapter.notifyDataSetChanged();
+		}
+
+	}
+
+	@Override
+	public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+	}
+
+	@Override
+	public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+	}
+
+	@Override
+	public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+	}
+
+	@Override
+	public void onCancelled(@NonNull DatabaseError databaseError) {
+
 	}
 
 	private void sendToast(String message) {
 		Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+	}
+
+	private void assertLogin() {
+		if (GoogleSignIn.getLastSignedInAccount(this) == null) {
+			sendToLogin();
+		}
 	}
 
 	private void sendToLogin() {
@@ -132,30 +211,19 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 		startActivityForResult(intent, LoginActivity.RC_SUCCESS_SIGN_IN);
 	}
 
-	private void loadLibraryData() {    // LOOK HERE FOR FINAL PROJECT !
-		libraryListData.clear();
+	// TODO: Update GoogleSigninAccount to be a global variable.
+	private void updateUI() {
+		navigationView = findViewById(R.id.nav_view);
+		View headerView = navigationView.getHeaderView(0);
 
-		TypedArray libraryImages = getResources().obtainTypedArray(R.array.book_images);
-		String[] libraryTitles = getResources().getStringArray(R.array.book_names);
-		String[] libraryInfos = getResources().getStringArray(R.array.book_description);
-		String[] libraryPrices = getResources().getStringArray(R.array.book_prices);
+		TextView userName = headerView.findViewById(R.id.textView_userName);
+		TextView userProfile = headerView.findViewById(R.id.textView_userEmail);
 
-		for (int i = 0; i < libraryImages.length(); i++) {
-			Library currentBook = new Library(
-					libraryTitles[i],
-					libraryInfos[i],
-					libraryPrices[i],
-					libraryImages.getResourceId(i, 0));
-
-			libraryListData.add(currentBook);
-
-		}
-		libraryAdapter.notifyDataSetChanged();
-		libraryImages.recycle();
-
+		userName.setText(account != null ? account.getDisplayName() : "!");
+		userProfile.setText(account != null ? account.getEmail() : "!");
 	}
-	
-		@Override
+
+	@Override
 	public void onBackPressed() {
 		new AlertDialog.Builder(this)
 				.setTitle("Exiting App")

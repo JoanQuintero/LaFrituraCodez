@@ -9,13 +9,16 @@ import java.util.Map;
 @IgnoreExtraProperties
 public class Post {
 
+	private String key;
 	private String uid;
 	private String author;
 	private String title;
 	private String desc;
+	private int resource;
 
 	private double price;
 	private int starCount = 0;
+
 	private Map<String, Boolean> stars = new HashMap<>();
 
 	public Post() {
@@ -30,7 +33,24 @@ public class Post {
 		this.price = price;
 	}
 
+	Post(String uid, String author, String title, String desc, double price, int resource) {
+		this.uid = uid;
+		this.author = author;
+		this.title = title;
+		this.desc = desc;
+		this.price = price;
+		this.resource = resource;
+	}
 
+	Post(String key, String uid, String author, String title, String desc, double price, int resource) {
+		this.key = key;
+		this.uid = uid;
+		this.author = author;
+		this.title = title;
+		this.desc = desc;
+		this.price = price;
+		this.resource = resource;
+	}
 	@Exclude
 	public Map<String, Object> toMap() {
 		HashMap<String, Object> result = new HashMap<>();
@@ -38,6 +58,7 @@ public class Post {
 		result.put("author", author);
 		result.put("title", title);
 		result.put("desc", desc);
+		result.put("price", price);
 		result.put("starCount", starCount);
 		result.put("stars", stars);
 
@@ -92,6 +113,14 @@ public class Post {
 		this.stars = stars;
 	}
 
+	public String getKey() {
+		return key;
+	}
+
+	public void setKey(String key) {
+		this.key = key;
+	}
+
 	public String getUid() {
 		return uid;
 	}
@@ -100,4 +129,11 @@ public class Post {
 		this.uid = uid;
 	}
 
+	public int getResource() {
+		return resource;
+	}
+
+	public void setResource(int resource) {
+		this.resource = resource;
+	}
 }

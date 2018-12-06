@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Let\'s Deal</string>
-
+    <string name="client_id">115099223239-b5tja80nb4qmou88io1outjd3e12efh1.apps.googleusercontent.com</string>
     <string name="Login">login</string>
     <string name="text_accounts">All Accounts</string>
     <string name="hint_name">Name</string>
@@ -23,61 +23,6 @@
     <string name="action_settings">Settings</string>
     <string name="text_hello">Hello,</string>
 
-    <string-array name="book_names">
-        <item>Waist Deep in Black Water</item>
-        <item>Waiting for Nothing and Other Writings</item>
-        <item>Wake Up Dead Man</item>
-        <item>Waking Their Neighbors Up</item>
-        <item>Walker Percy</item>
-        <item>Walking in the Land of Many Gods</item>
-        <item>The War on Poverty</item>
-        <item>War upon the Land</item>
-    </string-array>
-
-    <string-array name="book_description">
-        <item>A book about swimming</item>
-        <item>Waiting for a letter</item>
-        <item>A dead man wakes up</item>
-        <item>Making a lot of noise, in writing</item>
-        <item>Percy, the one that walks</item>
-        <item>And so you say I am</item>
-        <item>War never ends</item>
-        <item>And we shall all be free</item>
-    </string-array>
-
-    <string-array name="book_prices">
-        <item>$100</item>
-        <item>$200</item>
-        <item>$300</item>
-        <item>$400</item>
-        <item>$500</item>
-        <item>$600</item>
-        <item>$700</item>
-        <item>$800</item>
-    </string-array>
-
-    <string-array name="book_images">
-        <item>@drawable/swimteam</item>
-        <item>@drawable/writeme</item>
-        <item>@drawable/zombies</item>
-        <item>@drawable/wakeandbakeneigh</item>
-        <item>@drawable/percywalks</item>
-        <item>@drawable/landofgods</item>
-        <item>@drawable/warpoverty</item>
-        <item>@drawable/waruponland</item>
-    </string-array>
-
-    <string-array name="book_authors">
-        <item>Lane, John</item>
-        <item>Kromer, Tom</item>
-        <item>Jackson, Bruce</item>
-        <item>Young, Thomas Daniel</item>
-        <item>Ciuba, Gary M.</item>
-        <item>Wohlpart, A. James</item>
-        <item>Orleck, Annelise</item>
-        <item>Brady, Lisa M.</item>
-    </string-array>
-
     <string name="title_activity_post">New Post</string>
     <string name="view_all">View all</string>
     <string name="watched_posts">Your watched posts</string>
@@ -86,10 +31,11 @@
 
     <string name="nav_home">Home</string>
     <string name="nav_trending">Trending</string>
+    <string name="nav_add">Add</string>
     <string name="nav_search">Search</string>
     <string name="nav_cart">My Cart</string>
     <string name="nav_account">Account</string>
-  
+
     <string name="post_hint">Post Information</string>
     <string name="post_author">Author</string>
     <string name="post_title">Title</string>
@@ -111,5 +57,12 @@
         remaining essentially unchanged. It was popularised in the 1960s with the
         release of Letraset sheets containing Lorem Ipsum passages, and more recently
         with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</string>
+
+    <string name="title_activity_drawer">DrawerActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">John Doe </string>
+    <string name="nav_header_subtitle">john.doe@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
 
 </resources>

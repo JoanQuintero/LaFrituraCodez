@@ -1,114 +1,133 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center"
-    android:padding="20dp"
-    android:background="@color/White">
+    android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/appTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/applogo"/>
-
-    <EditText
+    <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:background="@drawable/shape_credentials"
-        android:drawableLeft="@drawable/ic_account_circle_black"
-        android:drawablePadding="10dp"
-        android:hint="Username"
-        android:padding="15dp"
-        android:textColor="@color/Black"
-        android:textColorHighlight="@color/White"
-        android:textColorHint="@color/GoldenRod" />
+        android:theme="@style/AppTheme">
 
-    <EditText
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.AppBarOverlay" />
+
+    </android.support.design.widget.AppBarLayout>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:background="@drawable/shape_credentials"
-        android:drawableLeft="@android:drawable/ic_secure"
-        android:drawablePadding="10dp"
-        android:hint="Password"
-        android:padding="15dp"
-        android:textColor="@color/Black"
-        android:textColorHighlight="@color/White"
-        android:textColorHint="@color/GoldenRod"/>
+        android:layout_height="match_parent"
+        android:layout_marginTop="?attr/actionBarSize"
+        tools:context=".MainActivity">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <CheckBox
+        <RelativeLayout
+            android:id="@+id/cardViewRelative"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="0dp"
-            android:buttonTint="@color/Yellow"
-            android:checked="false"
-            android:text="Remember Me" />
+            android:layout_marginTop="10dp"
+            android:paddingEnd="@dimen/field_padding"
+            android:paddingStart="@dimen/field_padding">
+
+            <TextView
+                android:id="@+id/textView_recentPostTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@id/recyclerView_recentPost"
+                android:layout_marginBottom="-29dp"
+                android:text="@string/recent_posts"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Body2"
+                android:textColor="@color/colorAccent" />
+
+            <TextView
+                android:id="@+id/textView_recentPostHelper"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignEnd="@id/recyclerView_recentPost"
+                android:layout_marginBottom="-29dp"
+                android:layout_marginEnd="11dp"
+                android:text="@string/view_all" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerView_recentPost"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textView_recentPostHelper"
+                android:layout_marginTop="29dp">
+
+            </android.support.v7.widget.RecyclerView>
+
+        </RelativeLayout>
 
         <TextView
-            android:layout_width="match_parent"
+            android:id="@+id/textView_userPostTitle"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="0dp"
-            android:buttonTint="@color/White"
-            android:drawableLeft="@android:drawable/ic_partial_secure"
-            android:drawablePadding="6dp"
-            android:text="Forgot Password"
-            android:textColor="@color/OrangeRed" />
+            android:layout_alignParentStart="true"
+            android:layout_below="@id/cardViewRelative"
+            android:layout_marginHorizontal="@dimen/field_padding"
+            android:text="@string/user_posts"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Body2"
+            android:textColor="@color/colorAccent" />
+
+        <TextView
+            android:id="@+id/textView_userPostHelper"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@id/cardViewRelative"
+            android:layout_marginEnd="13dp"
+            android:paddingEnd="@dimen/field_padding"
+            android:paddingStart="@dimen/field_padding"
+            android:text="@string/view_all" />
 
 
-    </LinearLayout>
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Log In"
-        android:padding="15dp"
-        android:theme="@style/AppTheme"
-        android:layout_marginRight="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginBottom="10dp"
-        android:layout_marginTop="0dp"
-        android:background="@drawable/shape_credentials"/>
-
-    <!--<Button-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:text="Sign Up"-->
-    <!--android:shadowColor="@android:color/transparent"-->
-    <!--android:padding="15dp"-->
-    <!--android:layout_marginRight="10dp"-->
-    <!--android:layout_marginLeft="10dp"-->
-    <!--android:layout_marginBottom="10dp"-->
-    <!--android:layout_marginTop="0dp"-->
-    <!--android:background="@drawable/shape_credentials" />-->
-
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:gravity="center"
-        android:text="@string/text_not_member"
-        android:textSize="16dp"
-        android:shadowColor="@android:color/transparent"
-        android:padding="15dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginBottom="10dp" />
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView_UserPosts"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textView_userPostTitle"
+            android:paddingEnd="@dimen/field_padding"
+            android:paddingStart="@dimen/field_padding" />
 
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/textView_watchedPostTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@id/recyclerView_UserPosts"
+            android:layout_marginHorizontal="@dimen/field_padding"
+            android:layout_marginTop="@dimen/field_padding"
+            android:text="@string/watched_posts"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Body2"
+            android:textColor="@color/colorAccent" />
+
+        <TextView
+            android:id="@+id/textView_watchedPostHelper"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@id/recyclerView_UserPosts"
+            android:layout_marginHorizontal="@dimen/field_padding"
+            android:text="@string/view_all" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView_WatchedPosts"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textView_userPostTitle"
+            android:paddingEnd="@dimen/field_padding"
+            android:paddingStart="@dimen/field_padding" />
+
+    </RelativeLayout>
+
+
+</android.support.design.widget.CoordinatorLayout>

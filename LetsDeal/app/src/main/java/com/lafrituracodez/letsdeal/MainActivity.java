@@ -21,9 +21,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.firebase.database.*;
+import io.fabric.sdk.android.Fabric;
 
 import java.util.ArrayList;
 
@@ -68,6 +70,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 		assertLogin();
 		updateUI();
 
+		Fabric.with(this, new Crashlytics());
+		
 		DrawerLayout drawer = findViewById(R.id.drawer_layout);
 		ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
 				this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);

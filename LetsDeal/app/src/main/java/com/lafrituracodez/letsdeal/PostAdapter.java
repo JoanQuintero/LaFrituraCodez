@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class PostAdapter extends
 		RecyclerView.Adapter<PostAdapter.PostHolder> {     // LOOK HERE FOR FINAL PROJECT !
@@ -75,7 +76,8 @@ public class PostAdapter extends
 			// TODO: Upload a default key+file.
 			textTitle.setText(currentBook.getTitle());
 			textInfo.setText(currentBook.getDesc());
-			textPrice.setText(Double.toString(currentBook.getPrice()));
+			String price_str = String.format(Locale.US, "$%.2f", currentBook.getPrice());
+			textPrice.setText(price_str);
 
 			String current_key = currentBook.getKey();
 			Picasso.get().load("https://firebasestorage.googleapis.com/v0/b/lafrituracodez.appspot.com/o/images%2F" + current_key + "?alt=media").into(imageViewBook);

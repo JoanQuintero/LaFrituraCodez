@@ -31,19 +31,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 	private final static String TAG = "MainActivity";
 
-	private static ArrayList<Post> recentPostData;
-	private static ArrayList<Post> userPostData;
-
 	private GoogleSignInAccount account;
-	private RecyclerView recyclerView3;
-	private Boolean gridLayoutEnabled = false;
-
 	private DatabaseReference mDatabase;
 	private LinearLayoutManager linearLayoutManager;
 	private GridLayoutManager gridLayoutManager;
 
 	private PostAdapter recentPostAdapter;
 	private PostAdapter userPostAdapter;
+
+	private Boolean gridLayoutEnabled = false;
+	private ArrayList<Post> recentPostData;
+	private ArrayList<Post> userPostData;
 
 	private TextView viewRecents;
 	private RecyclerView recyclerView_RecentPosts;

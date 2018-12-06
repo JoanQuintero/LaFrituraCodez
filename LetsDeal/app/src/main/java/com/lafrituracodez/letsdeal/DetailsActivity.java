@@ -11,11 +11,10 @@ import java.util.Locale;
 
 public class DetailsActivity extends AppCompatActivity {
 
+	protected static Double price;
 	protected String title;
 	protected String desc;
 	protected String key;
-	protected static Double price;
-
 	private TextView description, total;
 	private ImageView cover;
 
@@ -44,5 +43,11 @@ public class DetailsActivity extends AppCompatActivity {
 		String price_str = String.format(Locale.US, "$%.2f", price);
 		total.setText(price_str);
 
+	}
+
+	@Override
+	public boolean onSupportNavigateUp() {
+		onBackPressed();
+		return true;
 	}
 }

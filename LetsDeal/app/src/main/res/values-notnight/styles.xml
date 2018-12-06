@@ -20,7 +20,7 @@
         <item name="windowNoTitle">true</item>
 
         <item name="android:actionMenuTextColor">@color/colorTextDark</item>
-        <item name="android:textColorSecondary">@android:color/white</item>
+        <item name="android:textColorSecondary">@color/colorTextDark</item>
         <item name="android:statusBarColor">@color/colorPrimary</item>
         <item name="android:windowLightStatusBar">true</item>
     </style>

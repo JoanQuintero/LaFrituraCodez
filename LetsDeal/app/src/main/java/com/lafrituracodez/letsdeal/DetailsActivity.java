@@ -3,15 +3,21 @@ package com.lafrituracodez.letsdeal;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.widget.ImageView;
 import android.widget.TextView;
+import com.squareup.picasso.Picasso;
+
+import java.util.Locale;
 
 public class DetailsActivity extends AppCompatActivity {
 
-	protected static String title;
+	protected String title;
+	protected String desc;
+	protected String key;
 	protected static Double price;
-	protected static String info;
 
-	private TextView total, subtotal, shipping, taxes, numTotal, numSubTotal, numShipping, numTaxes;
+	private TextView description, total;
+	private ImageView cover;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -19,15 +25,24 @@ public class DetailsActivity extends AppCompatActivity {
 		setContentView(R.layout.activity_details);
 
 		title = getIntent().getStringExtra("title");
-		info = getIntent().getStringExtra("desc");
+		desc = getIntent().getStringExtra("desc");
 		price = getIntent().getDoubleExtra("price", 0.0);
+		key = getIntent().getStringExtra("key");
 
 		Toolbar detail_toolbar = findViewById(R.id.toolbar_DetailActivity);
 		detail_toolbar.setTitle(title);
 		setSupportActionBar(detail_toolbar);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-		
 
-		numTotal = findViewById(R.id.Totalvalue);
+		cover = findViewById(R.id.imageView_detailCover);
+		Picasso.get().load("https://firebasestorage.googleapis.com/v0/b/lafrituracodez.appspot.com/o/images%2F" + key + "?alt=media").into(cover);
+
+		description = findViewById(R.id.textView_detailBookDesc);
+		total = findViewById(R.id.textView_detailBookPriceTotal);
+
+		description.setText(desc);
+		String price_str = String.format(Locale.US, "$%.2f", price);
+		total.setText(price_str);
+
 	}
 }

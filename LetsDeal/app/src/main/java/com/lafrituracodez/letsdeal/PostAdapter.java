@@ -91,6 +91,7 @@ public class PostAdapter extends
 			intent.putExtra("title", currentBook.getTitle());
 			intent.putExtra("desc", currentBook.getDesc());
 			intent.putExtra("price", currentBook.getPrice());
+			intent.putExtra("key", currentBook.getKey());
 
 			context.startActivity(intent);
 		}

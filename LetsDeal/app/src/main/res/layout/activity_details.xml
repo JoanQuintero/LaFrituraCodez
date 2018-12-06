@@ -1,148 +1,153 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
 
-    <android.support.design.widget.AppBarLayout
-        android:id="@+id/toolbar_DetailLayout"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
-
-        <android.support.v7.widget.Toolbar
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/toolbar_DetailActivity"
-            android:layout_width="fill_parent"
-            android:layout_height="?android:attr/actionBarSize"
-            app:popupTheme="@style/AppTheme.PopupOverlay"/>
-    </android.support.design.widget.AppBarLayout>
-
-    <RelativeLayout
-        android:id="@+id/bookdesc_loc"
+    <RelativeLayout xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="?android:attr/actionBarSize"
-        android:layout_below="@id/toolbar_DetailLayout"
-        android:layout_marginTop="?android:attr/actionBarSize">
+        android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/detail_desc_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Description" />
-
-        <ScrollView
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/toolbar_DetailLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/detail_desc_title">
+            android:theme="@style/AppTheme.AppBarOverlay">
 
-            <TextView
-                android:id="@+id/synapsis"
+            <android.support.v7.widget.Toolbar xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/toolbar_DetailActivity"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="0dp"
-                android:ems="10"
-                android:text="@string/lorem_test" />
-        </ScrollView>
-    </RelativeLayout>
+                app:popupTheme="@style/AppTheme.PopupOverlay" />
+        </android.support.design.widget.AppBarLayout>
 
-
-    <RelativeLayout
-        android:id="@+id/bookdetail_loc"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_below="@+id/bookdesc_loc">
+        <ImageView
+            android:id="@+id/imageView_detailCover"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/toolbar_DetailLayout"
+            android:adjustViewBounds="true"
+            android:maxHeight="250dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_background_empty" />
 
         <TextView
-            android:id="@+id/Total"
-            android:layout_width="wrap_content"
+            android:id="@+id/textView_detailBookDescHelper"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="10dp"
-            android:text="TOTAL" />
+            android:layout_below="@id/imageView_detailCover"
+            android:layout_marginHorizontal="@dimen/field_padding"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:text="@string/post_description"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+            android:textColor="@color/colorAccent" />
 
         <TextView
-            android:id="@+id/Subtotal"
-            android:layout_width="wrap_content"
+            android:id="@+id/textView_detailBookDesc"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/Total"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="10dp"
-            android:text="Subtotal" />
+            android:layout_below="@id/textView_detailBookDescHelper"
+            android:layout_marginHorizontal="@dimen/field_padding"
+            android:layout_marginVertical="@dimen/activity_vertical_margin"
+            android:ems="10"
+            android:text="@string/lorem_test" />
 
-        <TextView
-            android:id="@+id/Shipping"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/Subtotal"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="10dp"
-            android:text="Shipping/Handling" />
+        <GridLayout
+            android:id="@+id/layout_bookDescPrice"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/textView_detailBookDesc"
+            android:layout_marginHorizontal="@dimen/field_padding">
 
-        <TextView
-            android:id="@+id/Taxesandfees"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/Shipping"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="10dp"
-            android:text="Taxes and Fees" />
+            <TextView
+                android:id="@+id/textView_detailBookPriceTotalHelper"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="0"
+                android:layout_row="0"
+                android:text="Total"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1" />
 
-        <TextView
-            android:id="@+id/Totalvalue"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="10dp"
-            android:text="TextView" />
+            <TextView
+                android:id="@+id/textView_detailBookPriceTotal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:layout_gravity="end"
+                android:layout_row="0"
+                android:text="$0.00"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+                android:textColor="@color/colorAccent" />
 
-        <TextView
-            android:id="@+id/Subtotalvalue"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_below="@+id/Totalvalue"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="10dp"
-            android:text="TextView" />
+            <TextView
+                android:id="@+id/textView_detailBookPriceSubtotalHelper"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="0"
+                android:layout_row="1"
+                android:text="Subtotal" />
 
-        <TextView
-            android:id="@+id/Shippingvalue"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_below="@+id/Subtotalvalue"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="10dp"
-            android:text="TextView" />
+            <TextView
+                android:id="@+id/textView_detailBookPriceSubtotal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:layout_gravity="end"
+                android:layout_row="1"
+                android:text="$0.00"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+                android:textColor="@color/colorAccent" />
 
-        <TextView
-            android:id="@+id/Taxesandfeesvalue"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_below="@+id/Shippingvalue"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="10dp"
-            android:text="TextView" />
+            <TextView
+                android:id="@+id/textView_detailBookPriceShippingHelper"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="0"
+                android:layout_row="2"
+                android:text="Shipping/Handling" />
 
-        <Button
+            <TextView
+                android:id="@+id/textView_detailBookPriceShipping"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:layout_gravity="end"
+                android:layout_row="2"
+                android:text="$0.00"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+                android:textColor="@color/colorAccent" />
+
+            <TextView
+                android:id="@+id/textView_detailBookPriceTaxesHelper"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="0"
+                android:layout_row="3"
+                android:text="T&amp;F" />
+
+            <TextView
+                android:id="@+id/textView_detailBookPriceTaxes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:layout_gravity="end"
+                android:layout_row="3"
+                android:text="$0.00"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+                android:textColor="@color/colorAccent" />
+        </GridLayout>
+
+        <android.support.design.button.MaterialButton
             android:id="@+id/Buy"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginEnd="19dp"
-            android:text="ADD TO CART" />
-    </RelativeLayout>
+            android:layout_below="@id/layout_bookDescPrice"
+            android:layout_marginHorizontal="@dimen/field_padding"
+            android:layout_marginVertical="@dimen/field_padding"
+            android:text="Add to cart"
+            android:textAppearance="@style/TextAppearance.AppCompat.Button"
+            android:theme="@style/Widget.MaterialComponents.Button" />
 
-</RelativeLayout>
+    </RelativeLayout>
+</ScrollView>

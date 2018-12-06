@@ -135,15 +135,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 				break;
 		}
 		DrawerLayout drawer = findViewById(R.id.drawer_layout);
-		navigationView.post(new Runnable() {
-			@Override
-			public void run() {
-				navigationView.setCheckedItem(R.id.nav_home);
-			}
-		});
 		drawer.closeDrawer(GravityCompat.START);
-		return true;
-
+		return false;
 	}
 
 	@Override

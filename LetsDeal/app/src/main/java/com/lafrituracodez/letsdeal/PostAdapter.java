@@ -65,7 +65,7 @@ public class PostAdapter extends
 			textPrice = itemView.findViewById(R.id.tv_price);
 			imageViewBook = itemView.findViewById(R.id.imageView_book);
 
-			 itemView.setOnClickListener(this);
+			itemView.setOnClickListener(this);
 //			itemView.setOnLongClickListener((View.OnLongClickListener) this); //Find this method as OnLongClick()
 		}
 
